@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Booking extends CI_Controller {
+class Schedule extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -22,7 +22,7 @@ class Booking extends CI_Controller {
 		$this->load->view('header');
 		$this->load->view('jumbotron');
 		$this->load->view('navigation');
-		$this->load->view('booking');
+		$this->load->view('schedule');
 		$this->load->view('footer');
 	}
 }

@@ -18,39 +18,39 @@
 
   <div class="col-md-12">
     <table class="table table-bordered">
-    	<tr>
-    		<td>No.</td>
-    		<td>Applicant Name</td>
-    		<td>Booking Date</td>
-    		<td>Booking Time</td>
-    		<td>Purpose</td>
-    		<td>Destination</td>
-    		<td>Plate No.</td>
-    		<td>Driver</td>
+      <tr>
+        <td>No.</td>
+        <td>Applicant Name</td>
+        <td>Booking Date</td>
+        <td>Booking Time</td>
+        <td>Purpose</td>
+        <td>Destination</td>
+        <td>Plate No.</td>
+        <td>Driver</td>
         <td>Status</td>
-    	</tr>
-    	<tr>
-    		<td>1</td>
-    		<td>Muhammad Tara</td>
-    		<td>Wednesday, 10 March 2015</td>
-    		<td>10.00-16.00</td>
-    		<td>Meeting</td>
-    		<td>KP BRI 1</td>
-    		<td>B 12789 PGA</td>
-    		<td>Suprianto</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>Muhammad Tara</td>
+        <td>Wednesday, 10 March 2015</td>
+        <td>10.00-16.00</td>
+        <td>Meeting</td>
+        <td>KP BRI 1</td>
+        <td>B 12789 PGA</td>
+        <td>Suprianto</td>
         <td><span class="label label-success">Approved</span></td>
-    	</tr>
-    	<tr>
-    		<td>2</td>
-    		<td>Yohanna D S</td>
-    		<td>Friday, 12 March 2015</td>
-    		<td>12.00-16.00</td>
-    		<td>Meeting</td>
-    		<td>KP TSI</td>
-    		<td>B 11785 PGA</td>
-    		<td>Fadli</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Yohanna D S</td>
+        <td>Friday, 12 March 2015</td>
+        <td>12.00-16.00</td>
+        <td>Meeting</td>
+        <td>KP TSI</td>
+        <td>B 11785 PGA</td>
+        <td>Fadli</td>
         <td><span class="label label-warning">Pending</span></td>
-    	</tr>
+      </tr>
       <tr>
         <td>3</td>
         <td>Supriyadi</td>
@@ -73,7 +73,7 @@
         <td>Heru</td>
         <td><span class="label label-primary">Overdue</span></td>
       </tr>
-	  </table>
+    </table>
   </div>
 
 </div>
