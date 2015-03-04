@@ -1,4 +1,4 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php 
 
 class Driver_model extends CI_Model {
 
@@ -13,8 +13,9 @@ class Driver_model extends CI_Model {
         return $query->result();
     }
 
-    function insert_new_driver_holder($data)
+    function insert_new_driver_holder($table, $data=array())
     {
+        /*
         $entry = array(
         'Username' => $data['Username'],
         'Cellphone' => $data['Cellphone'],
@@ -26,8 +27,8 @@ class Driver_model extends CI_Model {
         'CreatedUsername' => $data['UserID'],
         'RowStatus' => 'A'
         );
-
-        $this->db->insert('msuser', $entry);
+        */
+        return $this->db->insert($table, $data);
     }
 
     function update($data)

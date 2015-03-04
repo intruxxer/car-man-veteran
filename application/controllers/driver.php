@@ -17,9 +17,19 @@ class Driver extends CI_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see http://codeigniter.com/user_guide/general/urls.html
 	 */
+	public function __construct()
+	{
+		parent::__construct();
+		$this->load->database();
+		$this->load->model('driver_model', 'drivermodel');
+		$this->load->helper('url');
+		$this->load->helper('date');
+		error_reporting(E_ALL);
+		ini_set('display_errors', 1);
+	}
+
 	public function index()
 	{
-		$this->load->database();
 		$this->load->helper('form');
 		$this->load->view('header');
 		$this->load->view('jumbotron');
@@ -30,30 +40,29 @@ class Driver extends CI_Controller {
 
 	public function create()
 	{
-		$this->load->model('Driver_model');
-		$this->load->helper('date');
-
-		$datestring = "%Y-%m-%d %h:%i:%a";
+		$tablename = 'msuser';
+		$datestring = "%Y-%m-%d %h:%i:%s";
 		$time = mdate($datestring, time());
 
-		$data['UserID'] = 0; //The one who created this entry
-		$data['Username'] = $this->input->post('driverHolderName');
-		$data['Cellphone'] = $this->input->post('driverHolderCellphone');
-		$data['Personincharge'] = $this->input->post('driverHolderPersonInCharge');
-		$data['Carincharge'] = $this->input->post('driverHolderCarInCharge');
-		$data['Position'] = $this->input->post('driverHolderPosition');
-		$data['Role'] = "driver";
-		$data['CreatedTime'] = $time;
-		$data['CreatedUsername'] = "admin";
+		$data = array(
+		
+			'Username'=>$this->input->post('driverHolderName'),
+			'Cellphone'=>$this->input->post('driverHolderCellphone'),
+			'Personincharge'=>$this->input->post('driverHolderPersonInCharge'),
+			'Carincharge'=>$this->input->post('driverHolderCarInCharge'),
+			'Position'=>$this->input->post('driverHolderPosition'),
+			'Role'=>"driver",
+			'CreatedTime'=>$time,
+			'CreatedUsername'=>0,
+			'RowStatus'=>'A'
 
-		$this->Driver_model->insert_new_driver_holder($data);
+		);
 
-		$this->load->helper('form');
-		$this->load->view('header');
-		$this->load->view('jumbotron');
-		$this->load->view('navigation');
-		$this->load->view('driver');
-		$this->load->view('footer');
+		var_dump($data);
+
+		$new_driver = $this->drivermodel->insert_new_driver_holder($tablename, $data);
+
+		redirect("driver/index");
 	}
 
 	/*
