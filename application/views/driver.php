@@ -1,7 +1,7 @@
 <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
     <ul id="myTab" class="nav nav-tabs" role="tablist">
       <li class="" role="presentation"><a href="#profile" id="profile-tab" role="tab" data-toggle="tab" aria-controls="profile" aria-expanded="false">Driver Profile</a></li>
-      <li class="" role="presentation"><a href="#home" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="false">Add Driver</a></li>
+      <li class="" role="presentation"><a href="#home" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="false">Add Driver/Holder</a></li>
       <!--<li class="dropdown" role="presentation">
         <a href="#" id="myTabDrop1" class="dropdown-toggle" data-toggle="dropdown"  aria-expanded="false" aria-controls="myTabDrop1-contents">Dropdown <span class="caret"></span></a>
         <ul class="dropdown-menu" role="menu" aria-labelledby="myTabDrop1" id="myTabDrop1-contents">
@@ -90,20 +90,32 @@
       <div role="tabpanel" class="tab-pane fade" id="home" aria-labelledby="home-tab">
           <div class="row">&nbsp;</div>
           <div class="row">
-              <form class="">
+              <?php echo form_open('driver/create') ?>
                   <div class="row">
                       <div class="col-md-1"></div>
-                      <div class="col-md-3">
+                      <div class="col-md-2">
                         <div class="form-group">
                           <label for="driverHolderName">Name</label>
-                          <input type="text" class="form-control" id="driverHolderName" name="driverHolderName" placeholder="Enter Driver/Holder Name">
+                          <input type="text" class="form-control" id="driverHolderName" name="driverHolderName" placeholder="Driver/Holder Name">
                         </div>
                       </div>  
 
-                      <div class="col-md-3">
+                      <div class="col-md-2">
                         <div class="form-group">
                           <label for="driverHolderCellphone">Cellphone</label>
-                          <input type="text" class="form-control" id="driverHolderCellphone" name="driverHolderCellphone" placeholder="Enter Driver/Holder Cellphone">
+                          <input type="text" class="form-control" id="driverHolderCellphone" name="driverHolderCellphone" placeholder="Driver/Holder HP">
+                        </div>
+                      </div>
+
+                      <div class="col-md-2">
+                        <div class="form-group">
+                          <label for="driverHolderPosition">Position</label>
+                          <select class="form-control" id="driverHolderPosition" name="driverHolderPosition">
+                            <option value="Driver">Driver</option>
+                            <option value="Pinca">Pinca BRI</option>
+                            <option value="MP">MP</option>
+                            <option value="MO">MO</option>
+                          </select>
                         </div>
                       </div>
 
@@ -134,22 +146,16 @@
                   </div>
                   <div class="row">&nbsp;</div>
                   <div class="row">
-                      <div class="col-md-1"></div>
-                      <div class="col-md-8">
-                        <div class="form-group">
-                          <label for="driverHolderAddress">Address</label>
-                          <textarea class="form-control" id="driverHolderAddress" name="driverHolderAddress" placeholder="Enter Driver/Holder Address" rows="2"></textarea>
-                        </div>
-                      </div>
+                      <div class="col-md-9"></div>
 
                       <div class="col-md-2">
                         <div class="form-group">
-                          <label for="driverHolderAddress">Add Driver to System</label>
-                          <button type="submit" class="btn btn-primary">Submit to CMAS Record</button>
+                          <button type="submit" class="btn btn-primary">Submit to CMAS System</button>
                         </div>
                       </div>
 
                       <div class="col-md-1"></div>
+
                   </div>
                   
               </form>

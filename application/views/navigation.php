@@ -28,7 +28,7 @@
           </ul>
         </li>
 
-        <li><a href="<?php echo base_url('driver') ?>">Drivers<span class="sr-only">(current)</span></a></li>
+        <li><a href="<?php echo base_url('driver') ?>">Drivers/Holders</a></li>
         <li><a href="<?php echo base_url('schedule') ?>">Maintenance Schedule</a></li>
       </ul>
 

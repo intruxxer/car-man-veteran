@@ -9,8 +9,6 @@
     </div>
 </div>
 
-<div class="row">&nbsp;</div>
-
 <div class="row">
 
   <div class="col-md-12">
@@ -77,7 +75,7 @@
 
 <div class="row">
   <div class="col-md-4"></div>
-  <div class="col-md-4">
+  <div class="col-md-4 col-md-offset-1">
     <nav>
       <ul class="pagination">
         <li>
