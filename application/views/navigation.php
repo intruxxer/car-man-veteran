@@ -28,12 +28,12 @@
           </ul>
         </li>
 
-        <li class="active"><a href="<?php echo base_url('driver') ?>">Drivers<span class="sr-only">(current)</span></a></li>
+        <li><a href="<?php echo base_url('driver') ?>">Drivers<span class="sr-only">(current)</span></a></li>
         <li><a href="<?php echo base_url('schedule') ?>">Maintenance Schedule</a></li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Alert <span class="badge">4</span></a></li>
+        <li class="active"><a href="#">Alert <span class="badge">4</span></a></li>
         <li class="dropdown">
           <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Setting <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
