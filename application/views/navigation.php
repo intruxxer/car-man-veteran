@@ -14,10 +14,12 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
+        <!-- IF ADMINISTRATOR-->
         <li class="dropdown">
           <a href="<?php echo base_url('booking') ?>" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Bookings<span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="<?php echo base_url('booking') ?>">All Request</a></li>
+            <li><a href="<?php echo base_url('booking/request') ?>">Book A Vehicle</a></li>
+            <li><a href="<?php echo base_url('booking') ?>">All Booking Request</a></li>
             <li class="divider"></li>
             <li><a href="<?php echo base_url('booking') ?>">By Pending Approval</a></li>
             <li class="divider"></li>
@@ -27,6 +29,19 @@
             <li><a href="<?php echo base_url('booking') ?>">By Specific Period</a></li>
           </ul>
         </li>
+        <!-- ENDIIF ADMINISTRATOR-->
+
+        <!-- IF NORMAL USER-->
+        <li class="dropdown">
+          <a href="<?php echo base_url('booking') ?>" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Bookings<span class="caret"></span></a>
+          <!-- IF NORMAL USER-->
+           <ul class="dropdown-menu" role="menu">
+            <li><a href="<?php echo base_url('booking/request') ?>">Book A Vehicle</a></li>
+            <li class="divider"></li>
+            <li><a href="<?php echo base_url('booking') ?>">My Booking Request</a></li>
+          </ul>
+        </li>
+        <!-- ENDIF NORMAL USER-->
 
         <li><a href="<?php echo base_url('driver') ?>">Drivers/Holders</a></li>
         <li><a href="<?php echo base_url('schedule') ?>">Maintenance Schedule</a></li>

@@ -6,37 +6,39 @@ class Driver_model extends CI_Model {
     {
         parent::__construct();
     }
-    
-    function get_all_driver_holder($data)
-    {
-        $query = $this->db->get_where( 'msuser', array('Role' => $data['Role']) );
-        return $query->result();
-    }
 
-    function insert_new_driver_holder($table, $data=array())
+    function insert_driver_holder($table, $data=array())
     {
-        /*
-        $entry = array(
-        'Username' => $data['Username'],
-        'Cellphone' => $data['Cellphone'],
-        'Position' => $data['Position'],
-        'Role'   => $data['Role'],
-        'Personincharge' => $data['Personincharge'],
-        'Carincharge'   => $data['Carincharge'],
-        'CreatedTime' => $data['CreatedTime'],
-        'CreatedUsername' => $data['UserID'],
-        'RowStatus' => 'A'
-        );
-        */
         return $this->db->insert($table, $data);
     }
 
-    function update($data)
+    function getall_driver_holder($table)
     {
+        $this->db->select('UserID, Username, Cellphone, Position, Personincharge, Carincharge')->where(array('Role'=>'driver', 'RowStatus'=>'A'));
+        return $this->db->get($table)->result();
+    }
+    
+    function getmaxID_driver_holder($table)
+    {
+        $this->db->select_max('UserID');
+        return $this->db->get($table)->result();
+    }
 
-        $this->db->update('msuser', $this, array(
-            'Username' => $data['username'])
-        );
+    function getone_driver_holder($table, $id)
+    {
+        $this->db->select('UserID, Username, Cellphone, Position, Personincharge, Carincharge')->where(array('UserID'=>$id, 'Role'=>'driver', 'RowStatus'=>'A'));
+        return $this->db->get($table)->result();
+    }
+
+    function update_driver_holder($table, $data=array(), $where)
+    {
+        $this->db->where(array('UserID'=>$where, 'RowStatus'=>'A'));
+        $this->db->update($table, $data);
+    }
+    
+    function delete_driver_holder($table,$where){
+        $this->db->where($where);
+        $this->db->delete($table);
     }
 
 }
