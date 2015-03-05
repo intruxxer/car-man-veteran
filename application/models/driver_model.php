@@ -21,7 +21,8 @@ class Driver_model extends CI_Model {
     function getmaxID_driver_holder($table)
     {
         $this->db->select_max('UserID');
-        return $this->db->get($table)->result();
+        $query = $this->db->get($table)->result();
+        return $query[0]->UserID;
     }
 
     function getone_driver_holder($table, $id)

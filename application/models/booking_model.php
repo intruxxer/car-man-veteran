@@ -18,6 +18,12 @@ class Booking_model extends CI_Model {
         return $this->db->get($table)->result();
     }
 
+    function getmaxID_booking($table)
+    {
+        $this->db->select_max('BookingID');
+        return $this->db->get($table)->result();
+    }
+
     function getone_booking($table, $id)
     {
         $this->db->select('UserID, Username, Cellphone, Position, Personincharge, Carincharge')->where(array('UserID'=>$id, 'Role'=>'driver'));
@@ -30,7 +36,7 @@ class Booking_model extends CI_Model {
         $this->db->update($table, $data);
     }
     
-    function delete_booking($table,$where){
+    function delete_booking($table, $where){
         $this->db->where($where);
         $this->db->delete($table);
     }

@@ -68,11 +68,12 @@ class Driver extends CI_Controller {
 		$datestring = "%Y-%m-%d %h:%i:%s";
 		$time = mdate($datestring, time());
 
-		$lastUserID = $this->drivermodel->getmaxID_driver_holder($tablename);
+		$maxUserID = $this->drivermodel->getmaxID_driver_holder($tablename);
+		//var_dump($maxUserID);
 
 		$data = array(
 
-			'UserID'=>$lastUserID,
+			'UserID'=>$maxUserID + 1,
 			'Username'=>$this->input->post('driverHolderName'),
 			'Cellphone'=>$this->input->post('driverHolderCellphone'),
 			'Personincharge'=>$this->input->post('driverHolderPersonInCharge'),

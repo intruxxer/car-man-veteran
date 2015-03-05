@@ -44,12 +44,33 @@ class Booking extends CI_Controller {
 		if($this->input->post('book'))
 		{
 			 // Request to Book
-		     $this->load->library('form_validation');
-		     //validation rules
+		     // $this->load->library('form_validation');
+		     // validation rules, if desired
+			$tablename = 'trcarbooking';
+			$datestring = "%Y-%m-%d %h:%i:%s";
+			$time = mdate($datestring, time());
+
+			$bookingID = $this->bookingmodel->getmaxID_driver_holder($tablename);
+
+			$bookingData = array(
+
+				'UserID'=>$lastUserID,
+				'Username'=>$this->input->post('driverHolderName'),
+				'Cellphone'=>$this->input->post('driverHolderCellphone'),
+				'Personincharge'=>$this->input->post('driverHolderPersonInCharge'),
+				'Carincharge'=>$this->input->post('driverHolderCarInCharge'),
+				'Position'=>$this->input->post('driverHolderPosition'),
+				'Role'=>"driver",
+				'CreatedTime'=>$time,
+				'CreatedUsername'=>0,
+				'RowStatus'=>'A'
+
+			);
 		} 
 		else
 		{ 
 		  	 // Normal View
+			$this->load->helper('form');
 			$this->load->view('header');
 			$this->load->view('headertitle');
 			$this->load->view('navigation');
