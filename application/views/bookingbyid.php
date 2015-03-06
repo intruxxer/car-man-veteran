@@ -20,7 +20,7 @@
           <?php for ($i = 0; $i < count($bookinglist); ++$i) { ?>
                               <tr>
                                    <td><a href="<?php echo base_url("booking/id/".$bookinglist[$i]->BookingID); ?>"><?php echo ($i+1); ?></a></td>
-                                   <td><a href="<?php echo base_url("booking/userid/".$bookinglist[$i]->UserBooking); ?>"><?php echo $bookinglist[$i]->Username; ?></a></td>
+                                   <td><a href="<?php echo base_url("booking/userid/".$bookinglist[$i]->UserBooking); ?>"><?php echo $namelist[0]->Username; ?></a></td>
                                    <td><?php $str = $bookinglist[$i]->BookingStart; echo date('g:ia \<\b\> l jS F Y \<\b\>', strtotime($str)); ?></td>
                                    <td><?php $str = $bookinglist[$i]->BookingEnd; echo date('g:ia \<\b\> l jS F Y \<\b\>', strtotime($str));  ?></td>
                                    <td>

@@ -1,0 +1,344 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"></head><body>array(4) {
+  [0]=&gt;
+  object(stdClass)#19 (10) {
+    ["BookingID"]=&gt;
+    string(1) "1"
+    ["CarID"]=&gt;
+    string(3) "101"
+    ["UserBooking"]=&gt;
+    string(1) "1"
+    ["Driver"]=&gt;
+    string(1) "1"
+    ["BookingStart"]=&gt;
+    string(19) "2015-03-06 13:00:00"
+    ["BookingEnd"]=&gt;
+    string(19) "2015-03-06 18:00:00"
+    ["Destination"]=&gt;
+    string(18) "Kantor Pusat BRI 1"
+    ["Remarks"]=&gt;
+    string(22) "Meeting dengan Div HBL"
+    ["BookingStatus"]=&gt;
+    string(1) "4"
+    ["Username"]=&gt;
+    string(24) "Rumah Tangga BRI Veteran"
+  }
+  [1]=&gt;
+  object(stdClass)#20 (10) {
+    ["BookingID"]=&gt;
+    string(1) "2"
+    ["CarID"]=&gt;
+    string(3) "101"
+    ["UserBooking"]=&gt;
+    string(1) "1"
+    ["Driver"]=&gt;
+    string(1) "1"
+    ["BookingStart"]=&gt;
+    string(19) "0000-00-00 00:00:00"
+    ["BookingEnd"]=&gt;
+    string(19) "0000-00-00 00:00:00"
+    ["Destination"]=&gt;
+    string(22) "KP BRI Div TSI Ragunan"
+    ["Remarks"]=&gt;
+    string(7) "Meeting"
+    ["BookingStatus"]=&gt;
+    string(1) "4"
+    ["Username"]=&gt;
+    string(24) "Rumah Tangga BRI Veteran"
+  }
+  [2]=&gt;
+  object(stdClass)#21 (10) {
+    ["BookingID"]=&gt;
+    string(1) "3"
+    ["CarID"]=&gt;
+    string(3) "101"
+    ["UserBooking"]=&gt;
+    string(1) "1"
+    ["Driver"]=&gt;
+    string(1) "1"
+    ["BookingStart"]=&gt;
+    string(19) "2015-03-14 11:11:01"
+    ["BookingEnd"]=&gt;
+    string(19) "2015-03-14 05:38:38"
+    ["Destination"]=&gt;
+    string(21) "Malioboro Hotel &amp; Spa"
+    ["Remarks"]=&gt;
+    string(20) "Relax and Happy Hour"
+    ["BookingStatus"]=&gt;
+    string(1) "4"
+    ["Username"]=&gt;
+    string(24) "Rumah Tangga BRI Veteran"
+  }
+  [3]=&gt;
+  object(stdClass)#22 (10) {
+    ["BookingID"]=&gt;
+    string(1) "4"
+    ["CarID"]=&gt;
+    string(3) "201"
+    ["UserBooking"]=&gt;
+    string(1) "1"
+    ["Driver"]=&gt;
+    string(1) "1"
+    ["BookingStart"]=&gt;
+    string(19) "2015-03-06 09:46:12"
+    ["BookingEnd"]=&gt;
+    string(19) "2015-03-06 16:46:20"
+    ["Destination"]=&gt;
+    string(24) "Kanwil 1 Jakarta Veteran"
+    ["Remarks"]=&gt;
+    string(7) "Dunno 2"
+    ["BookingStatus"]=&gt;
+    string(1) "4"
+    ["Username"]=&gt;
+    string(24) "Rumah Tangga BRI Veteran"
+  }
+}
+
+
+  
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" context="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>BRI Veteran</title>
+    <meta name="description" content="">
+
+    <link href="BRI%20Veteran_files/bootstrap.css" rel="stylesheet">
+    <link href="BRI%20Veteran_files/font-awesome.css" rel="stylesheet">
+    <link href="BRI%20Veteran_files/bootstrap-datetimepicker.css" rel="stylesheet">
+    <script src="BRI%20Veteran_files/jquery.js"></script>
+    <script src="BRI%20Veteran_files/moment.js"></script>
+    <script src="BRI%20Veteran_files/bootstrap.js"></script>
+    <script src="BRI%20Veteran_files/bootstrap-datetimepicker.js"></script>
+
+
+<div class="container">
+<div class="page-header">
+	<h1>BRI Veteran  <small>Office Car Management Application System</small></h1>
+</div>
+<div class="row">
+  <div class="col-md-8"></div>
+  <div class="col-md-4"><p class="text-right">Welcome, <a href="#">Rumah Tangga.</a></p></div>
+</div><nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">CMAS</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <!-- IF ADMINISTRATOR-->
+        <li class="dropdown">
+          <a href="http://localhost/veteran/car-management/booking" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Bookings<span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="http://localhost/veteran/car-management/booking/request">Book A Vehicle</a></li>
+            <li><a href="http://localhost/veteran/car-management/booking">All Booking Request</a></li>
+            <li class="divider"></li>
+            <li><a href="http://localhost/veteran/car-management/booking/pending">By Pending Approval</a></li>
+            <li class="divider"></li>
+            <li><a href="http://localhost/veteran/car-management/booking/bytoday">By Today</a></li>
+            <li><a href="http://localhost/veteran/car-management/booking/bythisweek">By This Week</a></li>
+            <li><a href="http://localhost/veteran/car-management/booking/bythismonth">By This Month</a></li>
+            <li><a href="http://localhost/veteran/car-management/booking/bydate">By Specific Period</a></li>
+          </ul>
+        </li>
+        <!-- ENDIIF ADMINISTRATOR-->
+
+        <!-- IF NORMAL USER-->
+        <li class="dropdown">
+          <a href="http://localhost/veteran/car-management/booking" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Bookings<span class="caret"></span></a>
+          <!-- IF NORMAL USER-->
+           <ul class="dropdown-menu" role="menu">
+            <li><a href="http://localhost/veteran/car-management/booking/request">Book A Vehicle</a></li>
+            <li class="divider"></li>
+            <li><a href="http://localhost/veteran/car-management/booking">My Booking Request</a></li>
+          </ul>
+        </li>
+        <!-- ENDIF NORMAL USER-->
+
+        <li><a href="http://localhost/veteran/car-management/driver">Drivers/Holders</a></li>
+        <li><a href="http://localhost/veteran/car-management/schedule">Maintenance Schedule</a></li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li class="active"><a href="#">Alert <span class="badge">4</span></a></li>
+        <li class="dropdown">
+          <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Setting <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="http://localhost/veteran/car-management/booking">Profile</a></li>
+            <li class="divider"></li>
+            <li><a href="http://localhost/veteran/car-management/booking">Sign In/Sign Out</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav><div class="row">
+
+  <div class="col-md-12">
+    <table class="table table-bordered">
+      <tbody><tr>
+        </tr></tbody><thead>
+          <tr><td>No.</td>
+          <td>Applicant</td>
+          <td>Booking Start</td>
+          <td>Booking End</td>
+          <td>Destination</td>
+          <td>Purpose</td>
+          <td>Vehicle</td>
+          <td>Driver</td>
+          <td>Status</td>
+        </tr></thead>
+      
+      <tbody><tr>
+        </tr></tbody><tbody>
+                                        <tr>
+                                   <td><a href="http://localhost/veteran/car-management/booking/id/1">1</a></td>
+                                   <td><a href="http://localhost/veteran/car-management/%3Cdiv%20style=" border:1px="" solid="" #990000;padding-left:20px;margin:0="" 0="" 10px="" 0;"="">
+
+<h4>A PHP Error was encountered</h4>
+
+<p>Severity: Notice</p>
+<p>Message:  Undefined property: stdClass::$UserID</p>
+<p>Filename: views/booking.php</p>
+<p>Line Number: 23</p>
+
+http://localhost/veteran/car-management/booking/userid"&gt;Rumah Tangga BRI Veteran</a></td>
+                                   <td>1:00pm <b> Friday 6th March 2015 <b></b></b></td>
+                                   <td>6:00pm <b> Friday 6th March 2015 <b></b></b></td>
+                                   <td>
+                                    <!--<span class="label label-danger">-->
+                                      Kantor Pusat BRI 1                                    <!--</span>-->
+                                   </td>
+                                   <td>Meeting dengan Div HBL</td>
+                                   <td>101</td>
+                                   <td>1</td>
+                                   <td>4</td>
+                              </tr>
+                                        <tr>
+                                   <td><a href="http://localhost/veteran/car-management/booking/id/2">2</a></td>
+                                   <td><a href="http://localhost/veteran/car-management/%3Cdiv%20style=" border:1px="" solid="" #990000;padding-left:20px;margin:0="" 0="" 10px="" 0;"="">
+
+<h4>A PHP Error was encountered</h4>
+
+<p>Severity: Notice</p>
+<p>Message:  Undefined property: stdClass::$UserID</p>
+<p>Filename: views/booking.php</p>
+<p>Line Number: 23</p>
+
+http://localhost/veteran/car-management/booking/userid"&gt;Rumah Tangga BRI Veteran</a></td>
+                                   <td>1:00am <b> Thursday 1st January 1970 <b></b></b></td>
+                                   <td>1:00am <b> Thursday 1st January 1970 <b></b></b></td>
+                                   <td>
+                                    <!--<span class="label label-danger">-->
+                                      KP BRI Div TSI Ragunan                                    <!--</span>-->
+                                   </td>
+                                   <td>Meeting</td>
+                                   <td>101</td>
+                                   <td>1</td>
+                                   <td>4</td>
+                              </tr>
+                                        <tr>
+                                   <td><a href="http://localhost/veteran/car-management/booking/id/3">3</a></td>
+                                   <td><a href="http://localhost/veteran/car-management/%3Cdiv%20style=" border:1px="" solid="" #990000;padding-left:20px;margin:0="" 0="" 10px="" 0;"="">
+
+<h4>A PHP Error was encountered</h4>
+
+<p>Severity: Notice</p>
+<p>Message:  Undefined property: stdClass::$UserID</p>
+<p>Filename: views/booking.php</p>
+<p>Line Number: 23</p>
+
+http://localhost/veteran/car-management/booking/userid"&gt;Rumah Tangga BRI Veteran</a></td>
+                                   <td>11:11am <b> Saturday 14th March 2015 <b></b></b></td>
+                                   <td>5:38am <b> Saturday 14th March 2015 <b></b></b></td>
+                                   <td>
+                                    <!--<span class="label label-danger">-->
+                                      Malioboro Hotel &amp; Spa                                    <!--</span>-->
+                                   </td>
+                                   <td>Relax and Happy Hour</td>
+                                   <td>101</td>
+                                   <td>1</td>
+                                   <td>4</td>
+                              </tr>
+                                        <tr>
+                                   <td><a href="http://localhost/veteran/car-management/booking/id/4">4</a></td>
+                                   <td><a href="http://localhost/veteran/car-management/%3Cdiv%20style=" border:1px="" solid="" #990000;padding-left:20px;margin:0="" 0="" 10px="" 0;"="">
+
+<h4>A PHP Error was encountered</h4>
+
+<p>Severity: Notice</p>
+<p>Message:  Undefined property: stdClass::$UserID</p>
+<p>Filename: views/booking.php</p>
+<p>Line Number: 23</p>
+
+http://localhost/veteran/car-management/booking/userid"&gt;Rumah Tangga BRI Veteran</a></td>
+                                   <td>9:46am <b> Friday 6th March 2015 <b></b></b></td>
+                                   <td>4:46pm <b> Friday 6th March 2015 <b></b></b></td>
+                                   <td>
+                                    <!--<span class="label label-danger">-->
+                                      Kanwil 1 Jakarta Veteran                                    <!--</span>-->
+                                   </td>
+                                   <td>Dunno 2</td>
+                                   <td>201</td>
+                                   <td>1</td>
+                                   <td>4</td>
+                              </tr>
+                  </tbody>
+      
+    </table>
+  </div>
+
+</div>
+
+<div class="row">
+  <div class="col-md-4"></div>
+  <div class="col-md-4 col-md-offset-1">
+    <nav>
+      <ul class="pagination">
+        <li>
+          <a href="#" aria-label="Previous">
+            <span aria-hidden="true">«</span>
+          </a>
+        </li>
+        <li><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+        <li>
+          <a href="#" aria-label="Next">
+            <span aria-hidden="true">»</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <div class="col-md-4"></div>
+</div>
+ <div class="row">
+	<div class="col-md-3">&nbsp;</div>
+	<div class="col-md-6">
+		<p style="text-align:center;"> CMAS BRI Veteran © Ali Fahmi &amp; Idham - All rights reserved. 2015-2016. <br> 
+		Page rendered in <strong>0.0400</strong> seconds.</p>
+	</div>
+	<div class="col-md-3">&nbsp;</div>
+ </div>
+
+  </div> <!-- div container> -->  
+
+  <script type="text/javascript">
+	$(function(){
+	  $(".alert").click(function(){$(this).hide()});
+	});
+  </script>
+
+</body></html>

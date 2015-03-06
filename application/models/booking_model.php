@@ -14,25 +14,77 @@ class Booking_model extends CI_Model {
     
     function getall_booking($table)
     {
-        $this->db->select('UserID, Username, Cellphone, Position, Personincharge, Carincharge')->where(array('Role'=>'driver', 'RowStatus'=>'A'));
+        $this->db
+        ->select('BookingID, CarID, UserBooking, Driver, BookingStart, BookingEnd, Destination, Remarks, BookingStatus')
+        ->where(array('RowStatus'=>'A'));
         return $this->db->get($table)->result();
+    }
+
+    function getallpending_booking($tableone, $tabletwo)
+    {
+        $this->db
+        ->select('BookingID, CarID, UserBooking, Driver, BookingStart, BookingEnd, Destination, Remarks, BookingStatus, Username');
+        $this->db->from($tableone);
+        $this->db->join($tabletwo, $tableone.'.UserBooking'.'='.$tabletwo.'.UserID', 'inner');
+        $this->db->where($tableone.'.BookingStatus', 4);
+        $query = $this->db->get()->result();
+        return $query;
+    }
+
+    function getone_booking($table, $id) 
+    {
+        $this->db
+        ->select('BookingID, CarID, UserBooking, Driver, BookingStart, BookingEnd, Destination, Remarks, BookingStatus')
+        ->where(array('BookingID'=>$id));
+        $query = $this->db->get($table)->result();
+        return $query;
+    }
+
+    function getoneuser_booking_byid($table, $id)
+    {
+        $this->db
+        ->select('BookingID, CarID, UserBooking, Driver, BookingStart, BookingEnd, Destination, Remarks, BookingStatus')
+        ->where(array('UserBooking'=>$id));
+        $query = $this->db->get($table)->result();
+        return $query;
+    }
+
+    function getoneuser_booking_join_byid($tableone, $tabletwo)
+    {
+        $this->db
+        ->select('BookingID, CarID, UserBooking, Driver, BookingStart, BookingEnd, Destination, Remarks, BookingStatus, Username');
+        $this->db->from($tableone);
+        $this->db->join($tabletwo, $tableone.'.UserBooking'.'='.$tabletwo.'.UserID', 'inner');
+        $query = $this->db->get()->result();
+        return $query;
+    }
+
+    function getoneuserbyname_booking($table, $name)
+    {
+        $this->db
+        ->select('BookingID, CarID, UserBooking, Driver, BookingStart, BookingEnd, Destination, Remarks, BookingStatus')
+        ->where(array('UserBookingName'=>$name));
+        $query = $this->db->get($table)->result();
+        return $query;
     }
 
     function getmaxID_booking($table)
     {
         $this->db->select_max('BookingID');
-        return $this->db->get($table)->result();
+        $query = $this->db->get($table)->result();
+        return $query[0]->BookingID;
     }
 
-    function getone_booking($table, $id)
+    function getusername_byid($id)
     {
-        $this->db->select('UserID, Username, Cellphone, Position, Personincharge, Carincharge')->where(array('UserID'=>$id, 'Role'=>'driver'));
-        return $this->db->get($table)->result();
+        $this->db->select('Username')->where('UserID',$id);
+        $query = $this->db->get('msuser')->result();
+        return $query;
     }
 
     function update_booking($table, $data=array(), $where)
     {
-        $this->db->where('UserID', $where);
+        $this->db->where('BookingID', $where);
         $this->db->update($table, $data);
     }
     

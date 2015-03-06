@@ -20,7 +20,7 @@ class Schedule extends CI_Controller {
 	public function index()
 	{
 		$this->load->view('header');
-		$this->load->view('jumbotron');
+		$this->load->view('headertitle');
 		$this->load->view('navigation');
 		$this->load->view('schedule');
 		$this->load->view('footer');

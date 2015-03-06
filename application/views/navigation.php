@@ -21,12 +21,12 @@
             <li><a href="<?php echo base_url('booking/request') ?>">Book A Vehicle</a></li>
             <li><a href="<?php echo base_url('booking') ?>">All Booking Request</a></li>
             <li class="divider"></li>
-            <li><a href="<?php echo base_url('booking') ?>">By Pending Approval</a></li>
+            <li><a href="<?php echo base_url('booking/pending') ?>">By Pending Approval</a></li>
             <li class="divider"></li>
-            <li><a href="<?php echo base_url('booking') ?>">By Today</a></li>
-            <li><a href="<?php echo base_url('booking') ?>">By This Week</a></li>
-            <li><a href="<?php echo base_url('booking') ?>">By This Month</a></li>
-            <li><a href="<?php echo base_url('booking') ?>">By Specific Period</a></li>
+            <li><a href="<?php echo base_url('booking/bytoday') ?>">By Today</a></li>
+            <li><a href="<?php echo base_url('booking/bythisweek') ?>">By This Week</a></li>
+            <li><a href="<?php echo base_url('booking/bythismonth') ?>">By This Month</a></li>
+            <li><a href="<?php echo base_url('booking/bydate') ?>">By Specific Period</a></li>
           </ul>
         </li>
         <!-- ENDIIF ADMINISTRATOR-->
