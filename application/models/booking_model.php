@@ -20,6 +20,28 @@ class Booking_model extends CI_Model {
         return $this->db->get($table)->result();
     }
 
+    function getall_booking_join_byid($tableone, $tabletwo)
+    {
+        $this->db
+        ->select('BookingID, CarID, UserBooking, Driver, BookingStart, BookingEnd, Destination, Remarks, BookingStatus, Username');
+        $this->db->from($tableone);
+        $this->db->join($tabletwo, $tableone.'.UserBooking'.'='.$tabletwo.'.UserID', 'inner');
+        $this->db->where($tabletwo.'.RowStatus', 'A');
+        $query = $this->db->get()->result();
+        return $query;
+    }
+
+    function getall_booking_today_join_byid($tableone, $tabletwo)
+    {
+        $this->db
+        ->select('BookingID, CarID, UserBooking, Driver, BookingStart, BookingEnd, Destination, Remarks, BookingStatus, Username');
+        $this->db->from($tableone);
+        $this->db->join($tabletwo, $tableone.'.UserBooking'.'='.$tabletwo.'.UserID', 'inner');
+        $this->db->where($tableone.'.BookingStatus', 4);
+        $query = $this->db->get()->result();
+        return $query;
+    }
+
     function getallpending_booking($tableone, $tabletwo)
     {
         $this->db
@@ -47,16 +69,6 @@ class Booking_model extends CI_Model {
         ->select('BookingID, CarID, UserBooking, Driver, BookingStart, BookingEnd, Destination, Remarks, BookingStatus')
         ->where(array('UserBooking'=>$id));
         $query = $this->db->get($table)->result();
-        return $query;
-    }
-
-    function getoneuser_booking_join_byid($tableone, $tabletwo)
-    {
-        $this->db
-        ->select('BookingID, CarID, UserBooking, Driver, BookingStart, BookingEnd, Destination, Remarks, BookingStatus, Username');
-        $this->db->from($tableone);
-        $this->db->join($tabletwo, $tableone.'.UserBooking'.'='.$tabletwo.'.UserID', 'inner');
-        $query = $this->db->get()->result();
         return $query;
     }
 

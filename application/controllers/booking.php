@@ -41,7 +41,7 @@ class Booking extends CI_Controller {
 			//$booking_list = $this->bookingmodel->getall_booking($tablename);
 			$tableone = 'trcarbooking';
 			$tabletwo = 'msuser';
-			$booking_list = $this->bookingmodel->getoneuser_booking_join_byid($tableone, $tabletwo);
+			$booking_list = $this->bookingmodel->getall_booking_join_byid($tableone, $tabletwo);
 			$data['bookinglist'] = $booking_list;
 			//var_dump($booking_list);
 			$this->load->view('header');
@@ -81,7 +81,7 @@ class Booking extends CI_Controller {
 			);
 			$update_booking = $this->bookingmodel->update_booking($tableone, $bookingData, $whereid);
 			set_flash('req_approval', 'alert alert-success', 
-					'You have successfully decide on a request. &nbsp;&nbsp;<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>', 'booking/pending');
+					'You have successfully decided on a request. &nbsp;&nbsp;<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>', 'booking/pending');
 
 		}
 		else
@@ -190,15 +190,14 @@ class Booking extends CI_Controller {
 
 				'BookingID'=>$bookingID,
 				'CarID'=>$this->input->post('CarID'),
-				'UserBooking'=>0,
-				'UserBookingName'=>'Admin',
+				'UserBooking'=>4,
 				'Driver'=>$this->input->post('Driver'),
 				'BookingStart'=>$this->input->post('BookingStart'),
 				'BookingEnd'=>$this->input->post('BookingEnd'),
 				'Destination'=>$this->input->post('Destination'),
 				'Remarks'=>$this->input->post('Remarks'),
 				'CreatedTime'=>$time,
-				'CreatedUsername'=>0,
+				'CreatedUsername'=>1,
 				'BookingStatus'=>4,
 				'RowStatus'=>'A'
 
@@ -226,6 +225,28 @@ class Booking extends CI_Controller {
 			$this->load->view('headertitle');
 			$this->load->view('navigation');
 			$this->load->view('bookingform');
+			$this->load->view('footer');
+		}
+	}
+
+	public function bytoday()
+	{
+		if(false){
+			//If there is update for these particular bookings
+		}
+		else
+		{
+			//$tablename = 'trcarbooking';
+			//$booking_list = $this->bookingmodel->getall_booking($tablename);
+			$tableone = 'trcarbooking';
+			$tabletwo = 'msuser';
+			$booking_list = $this->bookingmodel->getall_booking_join_byid($tableone, $tabletwo);
+			$data['bookinglist'] = $booking_list;
+			//var_dump($booking_list);
+			$this->load->view('header');
+			$this->load->view('headertitle');
+			$this->load->view('navigation');
+			$this->load->view('booking', $data);
 			$this->load->view('footer');
 		}
 	}

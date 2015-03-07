@@ -31,7 +31,22 @@
                                    <td><?php echo $bookinglist[$i]->Remarks; ?></td>
                                    <td><?php echo $bookinglist[$i]->CarID; ?></td>
                                    <td><?php echo $bookinglist[$i]->Driver; ?></td>
-                                   <td><?php echo $bookinglist[$i]->BookingStatus; ?></td>
+                                   <td><?php 
+                                             switch ($bookinglist[$i]->BookingStatus) {
+                                              case 1:
+                                                  echo '<span class="label label-success">Approved</span>';
+                                                  break;
+                                              case 2:
+                                                  echo '<span class="label label-danger">Declined</span>';
+                                                  break;
+                                              case 3:
+                                                  echo '<span class="label label-primary">Overriden/Canceled</span>';
+                                                  break;
+                                              case 4:
+                                                  echo '<span class="label label-warning">Pending</span>';
+                                                  break;
+                                              } 
+                                        ?></td>
                               </tr>
           <?php } ?>
         </tbody>

@@ -92,8 +92,8 @@
 
 <div class="row">
   <div class="col-md-3"></div>
-  <div class="col-md-3"><?php echo display_flash('new_booking'); ?></div>
-  <div class="col-md-3"></div>
+  <div class="col-md-7"><?php echo display_flash('new_booking'); ?></div>
+  <div class="col-md-2"></div>
 </div>
 
 <script type="text/javascript">
