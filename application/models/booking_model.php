@@ -23,7 +23,8 @@ class Booking_model extends CI_Model {
     function getallpending_booking($tableone, $tabletwo)
     {
         $this->db
-        ->select('BookingID, CarID, UserBooking, Driver, BookingStart, BookingEnd, Destination, Remarks, BookingStatus, Username');
+        //->select('BookingID, CarID, UserBooking, Driver, BookingStart, BookingEnd, Destination, Remarks, BookingStatus, Username');
+        ->select('*', 'Username');
         $this->db->from($tableone);
         $this->db->join($tabletwo, $tableone.'.UserBooking'.'='.$tabletwo.'.UserID', 'inner');
         $this->db->where($tableone.'.BookingStatus', 4);

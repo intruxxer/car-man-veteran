@@ -55,9 +55,33 @@ class Booking extends CI_Controller {
 
 	public function pending()
 	{
-		//To update pending req to approval (later)
-		if(false)
+		//To update pending req to approval
+		$this->load->helper('form');
+		if($this->input->post('submitBookingApproval'))
 		{
+			$tableone = 'trcarbooking';
+			$whereid = $this->input->post('BookingID');
+			
+			$bookingData = array(
+
+				'BookingID'=>$whereid,
+				'CarID'=>$this->input->post('CarID'),
+				'UserBooking'=>$this->input->post('UserBooking'),
+				'Driver'=>$this->input->post('Driver'),
+				'BookingStart'=>$this->input->post('BookingStart'),
+				'BookingEnd'=>$this->input->post('BookingEnd'),
+				'CheckedBy'=>$this->input->post('CheckedBy'),
+				'Destination'=>$this->input->post('Destination'),
+				'Remarks'=>$this->input->post('Remarks'),
+				'CreatedTime'=>$this->input->post('CreatedTime'),
+				'CreatedUsername'=>$this->input->post('CreatedUsername'),
+				'BookingStatus'=>$this->input->post('BookingStatus'),
+				'RowStatus'=>'A'
+
+			);
+			$update_booking = $this->bookingmodel->update_booking($tableone, $bookingData, $whereid);
+			set_flash('req_approval', 'alert alert-success', 
+					'You have successfully decide on a request. &nbsp;&nbsp;<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>', 'booking/pending');
 
 		}
 		else
@@ -70,7 +94,7 @@ class Booking extends CI_Controller {
 			$this->load->view('header');
 			$this->load->view('headertitle');
 			$this->load->view('navigation');
-			$this->load->view('booking', $data);
+			$this->load->view('bookingpending', $data);
 			$this->load->view('footer');
 		}
 
