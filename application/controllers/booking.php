@@ -28,6 +28,7 @@ class Booking extends CI_Controller {
 		$this->load->helper('date');
 		error_reporting(E_ALL);
 		ini_set('display_errors', 1);
+		date_default_timezone_set('Asia/Jakarta');
 	}
 
 	public function index()
@@ -240,7 +241,73 @@ class Booking extends CI_Controller {
 			//$booking_list = $this->bookingmodel->getall_booking($tablename);
 			$tableone = 'trcarbooking';
 			$tabletwo = 'msuser';
-			$booking_list = $this->bookingmodel->getall_booking_join_byid($tableone, $tabletwo);
+			$booking_list = $this->bookingmodel->getall_booking_today_join_byid($tableone, $tabletwo);
+			$data['bookinglist'] = $booking_list;
+			//var_dump($booking_list);
+			$this->load->view('header');
+			$this->load->view('headertitle');
+			$this->load->view('navigation');
+			$this->load->view('booking', $data);
+			$this->load->view('footer');
+		}
+	}
+
+	public function bythisweek()
+	{
+		if(false){
+			//If there is update for these particular bookings
+		}
+		else
+		{
+			//$tablename = 'trcarbooking';
+			//$booking_list = $this->bookingmodel->getall_booking($tablename);
+			$tableone = 'trcarbooking';
+			$tabletwo = 'msuser';
+			$booking_list = $this->bookingmodel->getall_booking_thisweek_join_byid($tableone, $tabletwo);
+			$data['bookinglist'] = $booking_list;
+			//var_dump($booking_list);
+			$this->load->view('header');
+			$this->load->view('headertitle');
+			$this->load->view('navigation');
+			$this->load->view('booking', $data);
+			$this->load->view('footer');
+		}
+	}
+
+	public function bythismonth()
+	{
+		if(false){
+			//If there is update for these particular bookings
+		}
+		else
+		{
+			//$tablename = 'trcarbooking';
+			//$booking_list = $this->bookingmodel->getall_booking($tablename);
+			$tableone = 'trcarbooking';
+			$tabletwo = 'msuser';
+			$booking_list = $this->bookingmodel->getall_booking_thismonth_join_byid($tableone, $tabletwo);
+			$data['bookinglist'] = $booking_list;
+			//var_dump($booking_list);
+			$this->load->view('header');
+			$this->load->view('headertitle');
+			$this->load->view('navigation');
+			$this->load->view('booking', $data);
+			$this->load->view('footer');
+		}
+	}
+
+	public function bydate()
+	{
+		if(false){
+			//If there is a booking search from A date to B date
+		}
+		else
+		{
+			//$tablename = 'trcarbooking';
+			//$booking_list = $this->bookingmodel->getall_booking($tablename);
+			$tableone = 'trcarbooking';
+			$tabletwo = 'msuser';
+			$booking_list = $this->bookingmodel->getall_booking_thismonth_join_byid($tableone, $tabletwo);
 			$data['bookinglist'] = $booking_list;
 			//var_dump($booking_list);
 			$this->load->view('header');

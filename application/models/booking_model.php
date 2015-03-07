@@ -33,12 +33,63 @@ class Booking_model extends CI_Model {
 
     function getall_booking_today_join_byid($tableone, $tabletwo)
     {
+        $todaystring = "%Y-%m-%d";
+        $today = mdate($todaystring, time());
+        $todaystart = $today.' 00:00:00'; $todayend = $today.' 23:59:59';
+        $where = $tabletwo.".RowStatus = 'A' AND ( "
+            .$tableone.".BookingStart >= '".$todaystart."' AND "
+            .$tableone.".BookingStart <= '".$todayend."' OR "
+            .$tableone.".BookingEnd >= '".$todaystart."' AND "
+            .$tableone.".BookingEnd <= '".$todayend."' )";
         $this->db
         ->select('BookingID, CarID, UserBooking, Driver, BookingStart, BookingEnd, Destination, Remarks, BookingStatus, Username');
         $this->db->from($tableone);
         $this->db->join($tabletwo, $tableone.'.UserBooking'.'='.$tabletwo.'.UserID', 'inner');
-        $this->db->where($tableone.'.BookingStatus', 4);
+        $this->db->where($where);
         $query = $this->db->get()->result();
+        //print_r($where.'<br/>'.$todaystart.' & '.$todayend.'<br/>'.mdate($todaystring, strtotime('+0 days',time()))); 
+        return $query;
+    }
+
+    function getall_booking_thisweek_join_byid($tableone, $tabletwo)
+    {
+        $todaystring = "%Y-%m-%d"; $weekstring = "%Y-%m-%d";
+        $today = mdate($todaystring, time());
+        $week = mdate($weekstring, strtotime('+7 days',time()));
+        $todaystart = $today.' 00:00:00'; $weekend = $week.' 23:59:59';
+        $where = $tabletwo.".RowStatus = 'A' AND ( "
+            .$tableone.".BookingStart >= '".$todaystart."' AND "
+            .$tableone.".BookingStart <= '".$weekend."' OR "
+            .$tableone.".BookingEnd >= '".$todaystart."' AND "
+            .$tableone.".BookingEnd <= '".$weekend."' )";
+        $this->db
+        ->select('BookingID, CarID, UserBooking, Driver, BookingStart, BookingEnd, Destination, Remarks, BookingStatus, Username');
+        $this->db->from($tableone);
+        $this->db->join($tabletwo, $tableone.'.UserBooking'.'='.$tabletwo.'.UserID', 'inner');
+        $this->db->where($where);
+        $query = $this->db->get()->result();
+        //print_r($where.'<br/>'.$todaystart.' & '.$todayend.'<br/>'); 
+        return $query;
+    }
+
+    function getall_booking_thismonth_join_byid($tableone, $tabletwo)
+    {
+        $todaystring = "%Y-%m-%d"; $monthstring = "%Y-%m-%d";
+        $today = mdate($todaystring, time());
+        $month = mdate($monthstring, strtotime('+30 days',time()));
+        $todaystart = $today.' 00:00:00'; $monthend = $month.' 23:59:59';
+        $where = $tabletwo.".RowStatus = 'A' AND ( "
+            .$tableone.".BookingStart >= '".$todaystart."' AND "
+            .$tableone.".BookingStart <= '".$monthend."' OR "
+            .$tableone.".BookingEnd >= '".$todaystart."' AND "
+            .$tableone.".BookingEnd <= '".$monthend."' )";
+        $this->db
+        ->select('BookingID, CarID, UserBooking, Driver, BookingStart, BookingEnd, Destination, Remarks, BookingStatus, Username');
+        $this->db->from($tableone);
+        $this->db->join($tabletwo, $tableone.'.UserBooking'.'='.$tabletwo.'.UserID', 'inner');
+        $this->db->where($where);
+        $query = $this->db->get()->result();
+        //print_r($where.'<br/>'.$todaystart.' & '.$todayend.'<br/>'); 
         return $query;
     }
 
@@ -50,6 +101,7 @@ class Booking_model extends CI_Model {
         $this->db->from($tableone);
         $this->db->join($tabletwo, $tableone.'.UserBooking'.'='.$tabletwo.'.UserID', 'inner');
         $this->db->where($tableone.'.BookingStatus', 4);
+        $this->db->where($tabletwo.'.RowStatus', 'A');
         $query = $this->db->get()->result();
         return $query;
     }
