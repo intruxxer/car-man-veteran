@@ -31,6 +31,20 @@ class Booking_model extends CI_Model {
         return $query;
     }
 
+// S: "MUNGKIN PERLU LIMIT JUGA??"
+    function getall_booking_join_byid_withlimitoffset($tableone, $tabletwo, $lim, $off)
+    {
+        $this->db
+        ->select('BookingID, CarID, UserBooking, Driver, BookingStart, BookingEnd, Destination, Remarks, BookingStatus, Username');
+        $this->db->from($tableone);
+        $this->db->join($tabletwo, $tableone.'.UserBooking'.'='.$tabletwo.'.UserID', 'inner');
+        $this->db->where($tabletwo.'.RowStatus', 'A');
+        $this->db->limit($lim, $off);
+        $query = $this->db->get()->result();
+        return $query;
+    }
+// E: "MUNGKIN PERLU LIMIT JUGA??"
+
     function getall_booking_today_join_byid($tableone, $tabletwo)
     {
         $todaystring = "%Y-%m-%d";
@@ -43,6 +57,7 @@ class Booking_model extends CI_Model {
             .$tableone.".BookingEnd <= '".$todayend."' )";
         $this->db
         ->select('BookingID, CarID, UserBooking, Driver, BookingStart, BookingEnd, Destination, Remarks, BookingStatus, Username');
+        $this->db->select_sum( $tableone.".BookingID", 'totalbooking');
         $this->db->from($tableone);
         $this->db->join($tabletwo, $tableone.'.UserBooking'.'='.$tabletwo.'.UserID', 'inner');
         $this->db->where($where);
@@ -90,6 +105,24 @@ class Booking_model extends CI_Model {
         $this->db->where($where);
         $query = $this->db->get()->result();
         //print_r($where.'<br/>'.$todaystart.' & '.$todayend.'<br/>'); 
+        return $query;
+    }
+
+    function getall_booking_inperiod_join_byid($tableone, $tabletwo, $startDate, $endDate)
+    {
+        $start = $startDate.' 00:00:00'; $end = $endDate.' 23:59:59';
+        $where = $tabletwo.".RowStatus = 'A' AND ( "
+            .$tableone.".BookingStart >= '".$start."' AND "
+            .$tableone.".BookingStart <= '".$end."' OR "
+            .$tableone.".BookingEnd >= '".$start."' AND "
+            .$tableone.".BookingEnd <= '".$end."' )";
+        $this->db
+        ->select('BookingID, CarID, UserBooking, Driver, BookingStart, BookingEnd, Destination, Remarks, BookingStatus, Username');
+        $this->db->from($tableone);
+        $this->db->join($tabletwo, $tableone.'.UserBooking'.'='.$tabletwo.'.UserID', 'inner');
+        $this->db->where($where);
+        $query = $this->db->get()->result();
+        //print_r($where.'<br/>'.$start.' & '.$end.'<br/><br/><br/>'); 
         return $query;
     }
 

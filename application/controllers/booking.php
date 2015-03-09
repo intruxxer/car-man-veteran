@@ -23,6 +23,7 @@ class Booking extends CI_Controller {
 		parent::__construct();
 		$this->load->database();
 		$this->load->library('session');
+		$this->load->library('pagination');
 		$this->load->model('booking_model', 'bookingmodel');
 		$this->load->helper('url');
 		$this->load->helper('date');
@@ -31,19 +32,48 @@ class Booking extends CI_Controller {
 		date_default_timezone_set('Asia/Jakarta');
 	}
 
-	public function index()
+	public function index($pageNo=NULL)
 	{
-		if(false){
-			//If there is update for these particular bookings
+		if($pageNo!=NULL){
+			$this->page($pageNo);
 		}
 		else
-		{
-			//$tablename = 'trcarbooking';
-			//$booking_list = $this->bookingmodel->getall_booking($tablename);
+		{	
 			$tableone = 'trcarbooking';
 			$tabletwo = 'msuser';
-			$booking_list = $this->bookingmodel->getall_booking_join_byid($tableone, $tabletwo);
-			$data['bookinglist'] = $booking_list;
+
+			$config['base_url'] = base_url('booking/page');
+			$config['total_rows'] = $this->db->get($tableone)->num_rows();
+			$config['per_page'] = 5;
+			$config['num_links'] =4;
+			$config['uri_segment'] = 3;
+			$config['cur_tag_open'] = '<a href="#"><b>';
+			$config['cur_tag_close'] = '</b></a>';
+			$config['full_tag_open'] = '<div id="pagination">';
+			$config['full_tag_close'] = '</div>';
+			
+			$this->pagination->initialize($config);
+
+			// *Here, there are params TABLE NAME, LIM, OFF 
+			//  i.e. LIM 5, 2 means to pick 2 records AFTER 5 records -> to take row 6, 7 in a table
+
+			//$data['voters'] = $this->db->get('pemilihcomplete', $config['per_page'], $this->uri->segment(4));
+			//$data['dpstln'] = $this->table->generate($data['voters']);
+			//$data['links'] = $this->pagination->create_links();
+
+			//var_dump($config['total_rows']); 
+
+			//MAIN
+			//$booking_list = $this->bookingmodel->getall_booking_join_byid($tableone, $tabletwo);
+			//$data['bookinglist'] = $booking_list;
+			//END MAIN
+
+
+			//underconstruction
+			$data['bookinglist'] = $this->bookingmodel
+			->getall_booking_join_byid_withlimitoffset($tableone, $tabletwo, $config['per_page'], $pageNo);
+			$data['links'] = $this->pagination->create_links();
+
 			//var_dump($booking_list);
 			$this->load->view('header');
 			$this->load->view('headertitle');
@@ -51,6 +81,52 @@ class Booking extends CI_Controller {
 			$this->load->view('booking', $data);
 			$this->load->view('footer');
 		}
+
+	}
+
+	public function page($pageNo=NULL)
+	{	
+			$tableone = 'trcarbooking';
+			$tabletwo = 'msuser';
+
+			$config['base_url'] = base_url('booking/page');
+			$config['total_rows'] = $this->db->get($tableone)->num_rows();
+			$config['per_page'] = 5;
+			$config['num_links'] =4;
+			$config['uri_segment'] = 3;
+			$config['cur_tag_open'] = '<a href="#"><b>';
+			$config['cur_tag_close'] = '</b></a>';
+			$config['full_tag_open'] = '<li>';
+			$config['full_tag_close'] = '</li>';
+			
+			$this->pagination->initialize($config);
+
+			// *Here, there are params TABLE NAME, LIM, OFF 
+			//  i.e. LIM 5, 2 means to pick 2 records AFTER 5 records -> to take row 6, 7 in a table
+
+			//$data['voters'] = $this->db->get('pemilihcomplete', $config['per_page'], $this->uri->segment(4));
+			//$data['dpstln'] = $this->table->generate($data['voters']);
+			//$data['links'] = $this->pagination->create_links();
+
+			//var_dump($config['total_rows']); 
+
+			//MAIN
+			//$booking_list = $this->bookingmodel->getall_booking_join_byid($tableone, $tabletwo);
+			//$data['bookinglist'] = $booking_list;
+			//END MAIN
+
+
+			//underconstruction
+			$data['bookinglist'] = $this->bookingmodel
+			->getall_booking_join_byid_withlimitoffset($tableone, $tabletwo, $config['per_page'], $pageNo);
+			$data['links'] = $this->pagination->create_links();
+
+			//var_dump($booking_list);
+			$this->load->view('header');
+			$this->load->view('headertitle');
+			$this->load->view('navigation');
+			$this->load->view('booking', $data);
+			$this->load->view('footer');
 
 	}
 
@@ -204,7 +280,7 @@ class Booking extends CI_Controller {
 
 			);
 
-			var_dump($bookingData);
+			//var_dump($bookingData);
 
 			$new_booking = $this->bookingmodel->insert_booking($tablename, $bookingData);
 			if($new_booking)
@@ -298,22 +374,44 @@ class Booking extends CI_Controller {
 
 	public function bydate()
 	{
-		if(false){
-			//If there is a booking search from A date to B date
+		$this->load->helper('form');
+		if($this->input->post('csrf_test_name') || $this->input->post('submitBookingSearch'))
+		{
+			 // Request to search for Bookings
+		     // $this->load->library('form_validation');
+		     // validation rules, if desired
+			$tableone = 'trcarbooking';
+			$tabletwo = 'msuser';
+			$startDate = $this->input->post('searchBookingStart'); 
+			$endDate = $this->input->post('searchBookingEnd');
+			$booking_list = $this->bookingmodel->getall_booking_inperiod_join_byid($tableone, $tabletwo, $startDate, $endDate);
+			$data['bookinglist'] = $booking_list;
+			//var_dump($booking_list);
+
+			if($booking_list)
+			{
+				set_flash('search_booking', 'alert alert-success', 
+					'Booking(s) found within your specified date. <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>');
+
+				$this->load->view('header');
+				$this->load->view('headertitle');
+				$this->load->view('navigation');
+				$this->load->view('bookingsearch', $data);
+				$this->load->view('footer');
+			}
+			else
+			{
+				set_flash('search_booking', 'alert alert-danger', 
+					'Booking(s) are not found within your specified date. <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>', 'booking/bydate');
+			}
+
 		}
 		else
 		{
-			//$tablename = 'trcarbooking';
-			//$booking_list = $this->bookingmodel->getall_booking($tablename);
-			$tableone = 'trcarbooking';
-			$tabletwo = 'msuser';
-			$booking_list = $this->bookingmodel->getall_booking_thismonth_join_byid($tableone, $tabletwo);
-			$data['bookinglist'] = $booking_list;
-			//var_dump($booking_list);
 			$this->load->view('header');
 			$this->load->view('headertitle');
 			$this->load->view('navigation');
-			$this->load->view('booking', $data);
+			$this->load->view('bookingsearch');
 			$this->load->view('footer');
 		}
 	}
