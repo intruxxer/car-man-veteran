@@ -130,7 +130,7 @@ class Booking extends CI_Controller {
 
 	}
 
-	public function pending()
+	public function pending($pageNo=NULL)
 	{
 		//To update pending req to approval
 		$this->load->helper('form');
@@ -165,8 +165,22 @@ class Booking extends CI_Controller {
 		{
 			$tableone = 'trcarbooking';
 			$tabletwo = 'msuser';
-			$booking_list = $this->bookingmodel->getallpending_booking($tableone, $tabletwo);
+			
+			$config['base_url'] = base_url('booking/pending');
+			$config['total_rows'] = $this->db->get_where($tableone, array('BookingStatus'=>4))->num_rows();
+			$config['per_page'] = 5;
+			$config['num_links'] =4;
+			$config['uri_segment'] = 3;
+			$config['cur_tag_open'] = '<a href="#"><b>';
+			$config['cur_tag_close'] = '</b></a>';
+			$config['full_tag_open'] = '<li>';
+			$config['full_tag_close'] = '</li>';
+			
+			$this->pagination->initialize($config);
+
+			$booking_list = $this->bookingmodel->getallpending_booking_withlimitoffset($tableone, $tabletwo, $config['per_page'], $pageNo);
 			$data['bookinglist'] = $booking_list;
+			$data['links'] = $this->pagination->create_links();
 			//var_dump($booking_list);
 			$this->load->view('header');
 			$this->load->view('headertitle');
@@ -306,7 +320,7 @@ class Booking extends CI_Controller {
 		}
 	}
 
-	public function bytoday()
+	public function bytoday($pageNo=NULL)
 	{
 		if(false){
 			//If there is update for these particular bookings
@@ -317,8 +331,24 @@ class Booking extends CI_Controller {
 			//$booking_list = $this->bookingmodel->getall_booking($tablename);
 			$tableone = 'trcarbooking';
 			$tabletwo = 'msuser';
-			$booking_list = $this->bookingmodel->getall_booking_today_join_byid($tableone, $tabletwo);
+
+			$config['base_url'] = base_url('booking/bytoday');
+			$config['total_rows'] = $this->bookingmodel->getnum_all_booking_today($tableone, $tabletwo)->num_rows();
+			$config['per_page'] = 5;
+			$config['num_links'] =4;
+			$config['uri_segment'] = 3;
+			$config['cur_tag_open'] = '<a href="#"><b>';
+			$config['cur_tag_close'] = '</b></a>';
+			$config['full_tag_open'] = '<li>';
+			$config['full_tag_close'] = '</li>';
+			//var_dump($config['total_rows']);
+			
+			$this->pagination->initialize($config);
+
+			$booking_list = $this->bookingmodel
+							->getall_booking_today_join_byid_withlimitoffset($tableone, $tabletwo, $config['per_page'], $pageNo);
 			$data['bookinglist'] = $booking_list;
+			$data['links'] = $this->pagination->create_links();
 			//var_dump($booking_list);
 			$this->load->view('header');
 			$this->load->view('headertitle');
@@ -328,7 +358,7 @@ class Booking extends CI_Controller {
 		}
 	}
 
-	public function bythisweek()
+	public function bythisweek($pageNo=NULL)
 	{
 		if(false){
 			//If there is update for these particular bookings
@@ -339,8 +369,27 @@ class Booking extends CI_Controller {
 			//$booking_list = $this->bookingmodel->getall_booking($tablename);
 			$tableone = 'trcarbooking';
 			$tabletwo = 'msuser';
-			$booking_list = $this->bookingmodel->getall_booking_thisweek_join_byid($tableone, $tabletwo);
+
+			$config['base_url'] = base_url('booking/bythisweek');
+			$config['total_rows'] = $this->bookingmodel->getnum_all_booking_thisweek_join_byid($tableone, $tabletwo)->num_rows();
+			$config['per_page'] = 5;
+			$config['num_links'] =4;
+			$config['uri_segment'] = 3;
+			$config['cur_tag_open'] = '<a href="#"><b>';
+			$config['cur_tag_close'] = '</b></a>';
+			$config['full_tag_open'] = '<li>';
+			$config['full_tag_close'] = '</li>';
+
+			//var_dump($config['total_rows']);
+			
+			$this->pagination->initialize($config);
+
+			$data['links'] = $this->pagination->create_links();
+
+			$booking_list = $this->bookingmodel
+							->getall_booking_thisweek_join_byid_withlimitoffset($tableone, $tabletwo, $config['per_page'], $pageNo);
 			$data['bookinglist'] = $booking_list;
+			$data['links'] = $this->pagination->create_links();
 			//var_dump($booking_list);
 			$this->load->view('header');
 			$this->load->view('headertitle');
@@ -350,7 +399,7 @@ class Booking extends CI_Controller {
 		}
 	}
 
-	public function bythismonth()
+	public function bythismonth($pageNo=NULL)
 	{
 		if(false){
 			//If there is update for these particular bookings
@@ -361,8 +410,25 @@ class Booking extends CI_Controller {
 			//$booking_list = $this->bookingmodel->getall_booking($tablename);
 			$tableone = 'trcarbooking';
 			$tabletwo = 'msuser';
-			$booking_list = $this->bookingmodel->getall_booking_thismonth_join_byid($tableone, $tabletwo);
+
+			$config['base_url'] = base_url('booking/bythismonth');
+			$config['total_rows'] = $this->bookingmodel->getnum_all_booking_thismonth_join_byid($tableone, $tabletwo)->num_rows();
+			$config['per_page'] = 5;
+			$config['num_links'] =4;
+			$config['uri_segment'] = 3;
+			$config['cur_tag_open'] = '<a href="#"><b>';
+			$config['cur_tag_close'] = '</b></a>';
+			$config['full_tag_open'] = '<li>';
+			$config['full_tag_close'] = '</li>';
+
+			//var_dump($config['total_rows']);
+			
+			$this->pagination->initialize($config);
+
+			$booking_list = $this->bookingmodel
+							->getall_booking_thismonth_join_byid_withlimitoffset($tableone, $tabletwo, $config['per_page'], $pageNo);
 			$data['bookinglist'] = $booking_list;
+			$data['links'] = $this->pagination->create_links();
 			//var_dump($booking_list);
 			$this->load->view('header');
 			$this->load->view('headertitle');
@@ -372,10 +438,10 @@ class Booking extends CI_Controller {
 		}
 	}
 
-	public function bydate()
+	public function bydate($pageNo=NULL)
 	{
 		$this->load->helper('form');
-		if($this->input->post('csrf_test_name') || $this->input->post('submitBookingSearch'))
+		if($this->input->post('submitBookingSearch'))
 		{
 			 // Request to search for Bookings
 		     // $this->load->library('form_validation');
@@ -384,15 +450,36 @@ class Booking extends CI_Controller {
 			$tabletwo = 'msuser';
 			$startDate = $this->input->post('searchBookingStart'); 
 			$endDate = $this->input->post('searchBookingEnd');
-			$booking_list = $this->bookingmodel->getall_booking_inperiod_join_byid($tableone, $tabletwo, $startDate, $endDate);
+
+			$config['base_url'] = base_url('booking/bydate');
+			$config['total_rows'] = $this->bookingmodel
+									->getnum_all_booking_inperiod_join_byid($tableone, $tabletwo, $startDate, $endDate)
+									->num_rows();
+			$config['per_page'] = 5;
+			$config['num_links'] =4;
+			$config['uri_segment'] = 3;
+			$config['cur_tag_open'] = '<a href="#"><b>';
+			$config['cur_tag_close'] = '</b></a>';
+			$config['full_tag_open'] = '<li>';
+			$config['full_tag_close'] = '</li>';
+
+			//var_dump($config['total_rows']);
+			
+			$this->pagination->initialize($config);
+
+			$booking_list = $this->bookingmodel
+							->getall_booking_inperiod_join_byid_withlimitoffset($tableone, $tabletwo, $startDate, $endDate, $config['per_page'], $pageNo);
 			$data['bookinglist'] = $booking_list;
+			$data['links'] = $this->pagination->create_links();
 			//var_dump($booking_list);
 
 			if($booking_list)
 			{
-				set_flash('search_booking', 'alert alert-success', 
-					'Booking(s) found within your specified date. <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>');
+				//set_flash('search_booking', 'alert alert-success', 
+				//	'Booking(s) found within your specified date. <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>');
 
+				$data['resultmessage'] = '<a class="alert alert-success">Booking(s) found within your specified date. 
+										  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>';
 				$this->load->view('header');
 				$this->load->view('headertitle');
 				$this->load->view('navigation');
@@ -402,7 +489,8 @@ class Booking extends CI_Controller {
 			else
 			{
 				set_flash('search_booking', 'alert alert-danger', 
-					'Booking(s) are not found within your specified date. <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>', 'booking/bydate');
+					'Booking(s) are not found within your specified date. 
+					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>');
 			}
 
 		}
@@ -411,7 +499,7 @@ class Booking extends CI_Controller {
 			$this->load->view('header');
 			$this->load->view('headertitle');
 			$this->load->view('navigation');
-			$this->load->view('bookingsearch');
+			$this->load->view('bookingsearchform');
 			$this->load->view('footer');
 		}
 	}

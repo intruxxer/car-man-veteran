@@ -2,22 +2,23 @@
 
   <div class="col-md-12">
     <table class="table table-bordered">
-      <tr>
         <thead>
-          <td>No.</td>
-          <td>Applicant</td>
-          <td>Booking Start</td>
-          <td>Booking End</td>
-          <td>Destination</td>
-          <td>Purpose</td>
-          <td>Vehicle</td>
-          <td>Driver</td>
-          <td>Status</td>
+          <tr>
+              <td>No.</td>
+              <td>Applicant</td>
+              <td>Booking Start</td>
+              <td>Booking End</td>
+              <td>Destination</td>
+              <td>Purpose</td>
+              <td>Vehicle</td>
+              <td>Driver</td>
+              <td>Status</td>
+        </tr>
         </thead>
-      </tr>
       <tr>
         <tbody>
-          <?php for ($i = 0; $i < count($bookinglist); ++$i) { ?>
+          <?php for ($i = 0; $i < count($bookinglist); ++$i) { 
+                    if( $bookinglist[$i]->BookingID != NULL)    {    ?>
                               <tr>
                                    <td><a href="<?php echo base_url("booking/id/".$bookinglist[$i]->BookingID); ?>"><?php echo $bookinglist[$i]->BookingID; ?></a></td>
                                    <td><a href="<?php echo base_url("booking/userid/".$bookinglist[$i]->UserBooking); ?>"><?php echo $bookinglist[$i]->Username; ?></a></td>
@@ -48,7 +49,13 @@
                                               } 
                                         ?></td>
                               </tr>
-          <?php } ?>
+          <?php } else{
+                  echo '<tr>
+                    <td colspan="9"><p class="text-center">There is no result available.</p></td>
+
+                  </tr>';
+          }
+                  } ?>
         </tbody>
       </tr>
     </table>

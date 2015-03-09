@@ -36,17 +36,37 @@
   </form>
 </div>
 
+<div class="row">&nbsp;</div>
+
 <div class="row">
-  <div class="col-md-3"></div>
-  <div class="col-md-7"><?php echo display_flash('search_booking'); ?></div>
-  <div class="col-md-2"></div>
+  <div class="col-md-4"></div>
+  <div class="col-md-4">
+      <div><?php echo $resultmessage; 
+                 //echo display_flash('search_booking'); ?>
+                  </div></div>
+  <div class="col-md-4"></div>
 </div>
+
+<div class="row">&nbsp;</div>
 
 <!-- search result -->
 <div class="row">
 
   <div class="col-md-12">
       <table class="table table-bordered">
+        <tr>
+        <thead>
+          <td>No.</td>
+          <td>Applicant</td>
+          <td>Booking Start</td>
+          <td>Booking End</td>
+          <td>Destination</td>
+          <td>Purpose</td>
+          <td>Vehicle</td>
+          <td>Driver</td>
+          <td>Status</td>
+        </thead>
+        </tr>
         <tbody>
         <?php for ($i = 0; $i < count($bookinglist); ++$i) { ?>
                               <tr>
