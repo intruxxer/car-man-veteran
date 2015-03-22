@@ -37,10 +37,10 @@
                                    <td><?php echo $driverholderlist[$i]->Cellphone; ?></td>
                                    <td>
                                     <span class="label label-danger">
-                                      <?php echo $driverholderlist[$i]->Personincharge; ?>
+                                      <?php //echo $driverholderlist[$i]->Personincharge; ?>
                                     </span>
                                    </td>
-                                   <td><?php echo $driverholderlist[$i]->Carincharge; ?></td>
+                                   <td><?php //echo $driverholderlist[$i]->Carincharge; ?></td>
                               </tr>
               <?php } ?>
               </tbody>

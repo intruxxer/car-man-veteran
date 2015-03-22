@@ -49,8 +49,8 @@ $active_group = 'default';
 $active_record = TRUE;
 
 $db['default']['hostname'] = 'localhost';
-$db['default']['username'] = 'bri-veteran';
-$db['default']['password'] = 'veteran8';
+$db['default']['username'] = 'root';
+$db['default']['password'] = '';
 $db['default']['database'] = 'car_management';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';

@@ -19,9 +19,30 @@ class Dashboard extends CI_Controller {
 	 */
 	public function index()
 	{
+		/* 
+			GET SESSION DATA
+
+			$this->session->userdata('userid');
+			$this->session->userdata('username');
+			$this->session->userdata('role');
+			$this->session->userdata('loggedin');
+		*/
+			
+		//Check Logged in
+		if($this->session->userdata('loggedin')==NULL) 
+		{
+			redirect('login');
+		}
+
+
+		
 		$this->load->view('header');
-		$this->load->view('headertitle');
-		$this->load->view('navigation');
+
+		$data['username'] = $this->session->userdata('username');
+		$this->load->view('headertitle',$data);
+		
+		$data['role'] = $this->session->userdata('role');
+		$this->load->view('navigation', $data);
 		$this->load->view('dashboard');
 		$this->load->view('footer');
 	}

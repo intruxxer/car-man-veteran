@@ -11,6 +11,16 @@ class Booking_model extends CI_Model {
     {
         return $this->db->insert($table, $data);
     }
+
+    function getall_car($table='mscar')
+    {
+        return $this->db->get_where($table, array('RowStatus' =>'A'))->result();
+    }
+
+     function getall_driver($table='msuser')
+    {
+        return $this->db->get_where($table, array('Role'=>'Driver', 'RowStatus' =>'A'))->result();
+    }
     
     function getall_booking($table)
     {
@@ -31,15 +41,44 @@ class Booking_model extends CI_Model {
         return $query;
     }
 
-    function getall_booking_join_byid_withlimitoffset($tableone, $tabletwo, $lim, $off)
+    function getall_booking_join_byid_withlimitoffset($tableone, $tabletwo, $tablethree, $lim, $off)
     {
+        /*
         $this->db
-        ->select('BookingID, CarID, UserBooking, Driver, BookingStart, BookingEnd, Destination, Remarks, BookingStatus, Username');
+        ->select('BookingID, mscar.PlateNumber, mscar.CarID, trcarbooking.CarID as trid, UserBooking, Driver, BookingStart, BookingEnd, Destination, Remarks, BookingStatus, Username');
         $this->db->from($tableone);
-        $this->db->join($tabletwo, $tableone.'.UserBooking'.'='.$tabletwo.'.UserID', 'inner');
+        $this->db->join($tabletwo, $tableone.'.UserBooking'.'='.$tabletwo.'.UserID', 'left');
+        $this->db->join($tablethree, $tableone.'.CarID'.'='.$tablethree.'.CarID', 'left');
         $this->db->where($tabletwo.'.RowStatus', 'A');
-        $this->db->limit($lim, $off);
+        //$this->db->limit($lim, $off);
         $query = $this->db->get()->result();
+        //var_dump($query);
+        */
+        if($off==NULL) $off = 0;
+        $queryWord = "SELECT b.BookingID, a.PlateNumber, UserBooking, Driver, BookingStart, BookingEnd, Destination, Remarks, BookingStatus, Username
+                      FROM mscar a left join trcarbooking b on a.carid = b.carid and b.rowstatus = 'A' left join msuser c on b.userbooking = c.userid and c.rowstatus = 'A'
+                      WHERE a.rowstatus = 'A' ORDER BY a.PlateNumber, BookingStart, BookingEnd, b.createdtime ASC LIMIT ".$off.",".$lim;
+        $query = $this->db->query($queryWord);
+        return $query->result();
+    }
+
+    function getnum_all_booking_join_byid_withlimitoffset($tableone, $tabletwo, $tablethree)
+    {
+        /*
+        $this->db
+        ->select('BookingID, mscar.PlateNumber, mscar.CarID, trcarbooking.CarID as trid, UserBooking, Driver, BookingStart, BookingEnd, Destination, Remarks, BookingStatus, Username');
+        $this->db->from($tableone);
+        $this->db->join($tabletwo, $tableone.'.UserBooking'.'='.$tabletwo.'.UserID', 'left');
+        $this->db->join($tablethree, $tableone.'.CarID'.'='.$tablethree.'.CarID', 'left');
+        $this->db->where($tabletwo.'.RowStatus', 'A');
+        //$this->db->limit($lim, $off);
+        $query = $this->db->get()->result();
+        //var_dump($query);
+        */
+        $queryWord = "SELECT b.BookingID, a.PlateNumber, UserBooking, Driver, BookingStart, BookingEnd, Destination, Remarks, BookingStatus, Username
+                      FROM mscar a left join trcarbooking b on a.carid = b.carid and b.rowstatus = 'A' left join msuser c on b.userbooking = c.userid and c.rowstatus = 'A'
+                      WHERE a.rowstatus = 'A' ORDER BY a.PlateNumber, BookingStart, BookingEnd, b.createdtime ASC";
+        $query = $this->db->query($queryWord);
         return $query;
     }
 
@@ -64,7 +103,7 @@ class Booking_model extends CI_Model {
         return $query;
     }
 
-    function getall_booking_today_join_byid_withlimitoffset($tableone, $tabletwo, $lim, $off)
+    function getall_booking_today_join_byid_withlimitoffset($tableone, $tabletwo, $tablethree, $lim, $off)
     {
         $todaystring = "%Y-%m-%d";
         $today = mdate($todaystring, time());
@@ -75,11 +114,13 @@ class Booking_model extends CI_Model {
             .$tableone.".BookingEnd >= '".$todaystart."' AND "
             .$tableone.".BookingEnd <= '".$todayend."' )";
         $this->db
-        ->select('BookingID, CarID, UserBooking, Driver, BookingStart, BookingEnd, Destination, Remarks, BookingStatus, Username');
-        $this->db->select_sum( $tableone.".BookingID", 'totalbooking');
-        $this->db->from($tableone);
-        $this->db->join($tabletwo, $tableone.'.UserBooking'.'='.$tabletwo.'.UserID', 'inner');
+        ->select('BookingID, mscar.CarID, PlateNumber, UserBooking, Driver, BookingStart, BookingEnd, Destination, Remarks, BookingStatus, Username');
+        //$this->db->distinct(); //$tableone.".BookingID", 'totalbooking'
+        $this->db->from($tablethree);
+        $this->db->join($tableone, $tablethree.'.CarID'.'='.$tableone.'.CarID AND '.$tableone.'.RowStatus = "A"', 'left');
+        $this->db->join($tabletwo, $tableone.'.UserBooking'.'='.$tabletwo.'.UserID AND '.$tabletwo.'.RowStatus = "A"', 'left');
         $this->db->where($where);
+        $this->db->where($tablethree.".RowStatus = 'A'");
         $this->db->limit($lim, $off);
         $query = $this->db->get()->result();
         //print_r($where.'<br/>'.$todaystart.' & '.$todayend.'<br/>'.mdate($todaystring, strtotime('+0 days',time()))); 
@@ -128,7 +169,7 @@ class Booking_model extends CI_Model {
         return $query;
     }
 
-        function getall_booking_thisweek_join_byid_withlimitoffset($tableone, $tabletwo, $lim, $off)
+        function getall_booking_thisweek_join_byid_withlimitoffset($tableone, $tabletwo, $tablethree, $lim, $off)
     {
         $todaystring = "%Y-%m-%d"; $weekstring = "%Y-%m-%d";
         $today = mdate($todaystring, time());
@@ -140,10 +181,13 @@ class Booking_model extends CI_Model {
             .$tableone.".BookingEnd >= '".$todaystart."' AND "
             .$tableone.".BookingEnd <= '".$weekend."' )";
         $this->db
-        ->select('BookingID, CarID, UserBooking, Driver, BookingStart, BookingEnd, Destination, Remarks, BookingStatus, Username');
-        $this->db->from($tableone);
-        $this->db->join($tabletwo, $tableone.'.UserBooking'.'='.$tabletwo.'.UserID', 'inner');
+        ->select('BookingID, mscar.CarID, PlateNumber, UserBooking, Driver, BookingStart, BookingEnd, Destination, Remarks, BookingStatus, Username');
+        //$this->db->distinct(); //$tableone.".BookingID", 'totalbooking'
+        $this->db->from($tablethree);
+        $this->db->join($tableone, $tablethree.'.CarID'.'='.$tableone.'.CarID AND '.$tableone.'.RowStatus = "A"', 'left');
+        $this->db->join($tabletwo, $tableone.'.UserBooking'.'='.$tabletwo.'.UserID AND '.$tabletwo.'.RowStatus = "A"', 'left');
         $this->db->where($where);
+        $this->db->where($tablethree.".RowStatus = 'A'");
         $this->db->limit($lim, $off);
         $query = $this->db->get()->result();
         //print_r($where.'<br/>'.$todaystart.' & '.$todayend.'<br/>'); 
@@ -192,7 +236,7 @@ class Booking_model extends CI_Model {
         return $query;
     }
 
-    function getall_booking_thismonth_join_byid_withlimitoffset($tableone, $tabletwo, $lim, $off)
+    function getall_booking_thismonth_join_byid_withlimitoffset($tableone, $tabletwo, $tablethree, $lim, $off)
     {
         $todaystring = "%Y-%m-%d"; $monthstring = "%Y-%m-%d";
         $today = mdate($todaystring, time());
@@ -204,10 +248,13 @@ class Booking_model extends CI_Model {
             .$tableone.".BookingEnd >= '".$todaystart."' AND "
             .$tableone.".BookingEnd <= '".$monthend."' )";
         $this->db
-        ->select('BookingID, CarID, UserBooking, Driver, BookingStart, BookingEnd, Destination, Remarks, BookingStatus, Username');
-        $this->db->from($tableone);
-        $this->db->join($tabletwo, $tableone.'.UserBooking'.'='.$tabletwo.'.UserID', 'inner');
+        ->select('BookingID, mscar.CarID, PlateNumber, UserBooking, Driver, BookingStart, BookingEnd, Destination, Remarks, BookingStatus, Username');
+        //$this->db->distinct(); //$tableone.".BookingID", 'totalbooking'
+        $this->db->from($tablethree);
+        $this->db->join($tableone, $tablethree.'.CarID'.'='.$tableone.'.CarID AND '.$tableone.'.RowStatus = "A"', 'left');
+        $this->db->join($tabletwo, $tableone.'.UserBooking'.'='.$tabletwo.'.UserID AND '.$tabletwo.'.RowStatus = "A"', 'left');
         $this->db->where($where);
+        $this->db->where($tablethree.".RowStatus = 'A'");
         $this->db->limit($lim, $off);
         $query = $this->db->get()->result();
         //print_r($where.'<br/>'.$todaystart.' & '.$todayend.'<br/>'); 
@@ -253,7 +300,7 @@ class Booking_model extends CI_Model {
         return $query;
     }
 
-    function getall_booking_inperiod_join_byid_withlimitoffset($tableone, $tabletwo, $startDate, $endDate, $lim, $off)
+    function getall_booking_inperiod_join_byid_withlimitoffset($tableone, $tabletwo, $tablethree, $startDate, $endDate, $lim, $off)
     {
         $start = $startDate.' 00:00:00'; $end = $endDate.' 23:59:59';
         $where = $tabletwo.".RowStatus = 'A' AND ( "
@@ -262,10 +309,13 @@ class Booking_model extends CI_Model {
             .$tableone.".BookingEnd >= '".$start."' AND "
             .$tableone.".BookingEnd <= '".$end."' )";
         $this->db
-        ->select('BookingID, CarID, UserBooking, Driver, BookingStart, BookingEnd, Destination, Remarks, BookingStatus, Username');
-        $this->db->from($tableone);
-        $this->db->join($tabletwo, $tableone.'.UserBooking'.'='.$tabletwo.'.UserID', 'inner');
+        ->select('BookingID, mscar.CarID, PlateNumber, UserBooking, Driver, BookingStart, BookingEnd, Destination, Remarks, BookingStatus, Username');
+        //$this->db->distinct(); //$tableone.".BookingID", 'totalbooking'
+        $this->db->from($tablethree);
+        $this->db->join($tableone, $tablethree.'.CarID'.'='.$tableone.'.CarID AND '.$tableone.'.RowStatus = "A"', 'left');
+        $this->db->join($tabletwo, $tableone.'.UserBooking'.'='.$tabletwo.'.UserID AND '.$tabletwo.'.RowStatus = "A"', 'left');
         $this->db->where($where);
+        $this->db->where($tablethree.".RowStatus = 'A'");
         $this->db->limit($lim, $off);
         $query = $this->db->get()->result();
         //print_r($where.'<br/>'.$start.' & '.$end.'<br/><br/><br/>'); 
@@ -335,6 +385,18 @@ class Booking_model extends CI_Model {
         return $query;
     }
 
+    function getoneuser_booking_byid_withlimitoffset($table, $id, $lim, $off)
+    {
+        $this->db
+        ->select('BookingID, CarID, UserBooking, Driver, BookingStart, BookingEnd, Destination, Remarks, BookingStatus');
+        $this->db->from($table);
+        $this->db->where(array('UserBooking'=>$id));
+        $this->db->limit($lim, $off);
+        $query = $this->db->get()->result();
+        //var_dump($query);
+        return $query;
+    }
+
     function getoneuserbyname_booking($table, $name)
     {
         $this->db
@@ -355,6 +417,24 @@ class Booking_model extends CI_Model {
     {
         $this->db->select('Username')->where('UserID',$id);
         $query = $this->db->get('msuser')->result();
+        return $query;
+    }
+
+    function getdrivername_byid($id)
+    {
+        $query = "SELECT Username, Position, Role FROM msuser WHERE UserID = ".$id." AND RowStatus = 'A'";
+        //$this->db->select('Username')->where(
+        //    array('UserID'=>$id,
+        //        'RowStatus'=>'A'
+        //    ));
+        $result = $this->db->query($query)->result();
+        return $result;
+    }
+
+    function getvehicle_byid($id)
+    {
+        $this->db->select('PlateNumber')->where('CarID',$id);
+        $query = $this->db->get('mscar')->result();
         return $query;
     }
 

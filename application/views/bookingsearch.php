@@ -40,11 +40,11 @@
 
 <div class="row">
   <div class="col-md-4"></div>
-  <div class="col-md-4">
+  <div class="col-md-7">
       <div><?php echo $resultmessage; 
                  //echo display_flash('search_booking'); ?>
                   </div></div>
-  <div class="col-md-4"></div>
+  <div class="col-md-1"></div>
 </div>
 
 <div class="row">&nbsp;</div>
@@ -54,24 +54,28 @@
 
   <div class="col-md-12">
       <table class="table table-bordered">
+      <?php //echo count($bookinglist);
+            if(count($bookinglist) != 0)  { ?>
         <tr>
         <thead>
           <td>No.</td>
           <td>Applicant</td>
+          <td>Vehicle</td>
           <td>Booking Start</td>
           <td>Booking End</td>
           <td>Destination</td>
           <td>Purpose</td>
-          <td>Vehicle</td>
           <td>Driver</td>
           <td>Status</td>
         </thead>
         </tr>
+        <?php } ?>
         <tbody>
         <?php for ($i = 0; $i < count($bookinglist); ++$i) { ?>
                               <tr>
                                    <td><a href="<?php echo base_url("booking/id/".$bookinglist[$i]->BookingID); ?>"><?php echo ($i+1); ?></a></td>
                                    <td><a href="<?php echo base_url("booking/userid/".$bookinglist[$i]->UserBooking); ?>"><?php echo $bookinglist[$i]->Username; ?></a></td>
+                                   <td><?php echo $bookinglist[$i]->PlateNumber; ?></a></td>
                                    <td><?php $str = $bookinglist[$i]->BookingStart; echo date('g:ia \<\b\> l jS F Y \<\b\>', strtotime($str)); ?></td>
                                    <td><?php $str = $bookinglist[$i]->BookingEnd; echo date('g:ia \<\b\> l jS F Y \<\b\>', strtotime($str));  ?></td>
                                    <td>
@@ -80,8 +84,16 @@
                                     <!--</span>-->
                                    </td>
                                    <td><?php echo $bookinglist[$i]->Remarks; ?></td>
-                                   <td><?php echo $bookinglist[$i]->CarID; ?></td>
-                                   <td><?php echo $bookinglist[$i]->Driver; ?></td>
+                                
+                                   <td><?php if($bookinglist[$i]->Driver == NULL)
+                                            {
+                                               echo '<p class="text-center">-</p>';
+                                            }
+                                            else {$result = $this->bookingmodel
+                                            ->getdrivername_byid($bookinglist[$i]->Driver);
+                                               echo $result[0]->Username;
+                                            }     
+                                        ?></td>
                                    <td><?php 
                                              switch ($bookinglist[$i]->BookingStatus) {
                                               case 1:
@@ -104,6 +116,19 @@
       </table>
   </div>
 
+</div>
+<!-- end search result -->
+
+<div class="row">
+  <div class="col-md-4"></div>
+  <div class="col-md-4 col-md-offset-1">
+    <nav>
+      <ul class="pagination">
+        <?php echo $links; ?>
+      </ul>
+    </nav>
+  </div>
+  <div class="col-md-4"></div>
 </div>
 
 <script type="text/javascript">

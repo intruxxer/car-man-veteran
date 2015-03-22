@@ -14,7 +14,7 @@ class Driver_model extends CI_Model {
 
     function getall_driver_holder($table)
     {
-        $this->db->select('UserID, Username, Cellphone, Position, Personincharge, Carincharge')->where(array('Role'=>'driver', 'RowStatus'=>'A'));
+        $this->db->select('UserID, Username, Cellphone, Position')->where(array('Role'=>'driver', 'RowStatus'=>'A'));
         return $this->db->get($table)->result();
     }
     
@@ -27,7 +27,7 @@ class Driver_model extends CI_Model {
 
     function getone_driver_holder($table, $id)
     {
-        $this->db->select('UserID, Username, Cellphone, Position, Personincharge, Carincharge')->where(array('UserID'=>$id, 'Role'=>'driver', 'RowStatus'=>'A'));
+        $this->db->select('UserID, Username, Cellphone, Position')->where(array('UserID'=>$id, 'Role'=>'driver', 'RowStatus'=>'A'));
         return $this->db->get($table)->result();
     }
 

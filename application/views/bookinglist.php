@@ -18,20 +18,40 @@
         </thead>
       <tr>
         <tbody>
-          <?php  if( $bookinglist != NULL)    {    
-                  for ($i = 0; $i < count($bookinglist); ++$i) { ?>
+          <?php for ($i = 0; $i < count($bookinglist); ++$i) { 
+                    if( true/*$bookinglist[$i]->BookingID != NULL*/)    {    ?>
                               <tr>
-                                   <td><a href="<?php echo base_url("booking/id/".$bookinglist[$i]->BookingID); ?>"><?php echo $i + 1 ?></a></td>
-                                   <td><?php echo $bookinglist[$i]->PlateNumber; ?></a></td>
-                                   <td><a href="<?php echo base_url("booking/userid/".$bookinglist[$i]->UserBooking); ?>"><?php echo $bookinglist[$i]->Username; ?></a></td>
-                                   <td><?php $str = $bookinglist[$i]->BookingStart; echo date('\<\b\> l jS F Y \<\b\>', strtotime($str)); ?></td>
-                                   <td><?php $str = $bookinglist[$i]->BookingEnd; echo date('\<\b\> l jS F Y \<\b\>', strtotime($str));  ?></td>
-                                   <td><?php 
-                                        $strS = $bookinglist[$i]->BookingStart; 
-                                        echo date('\<\b\> g:ia \<\b\>', strtotime($str)).'-';
-                                        $strE = $bookinglist[$i]->BookingEnd; 
-                                        echo date('\<\b\> g:ia \<\b\>', strtotime($str));    
-                                        ?></td>
+                                   <td><a href="<?php echo base_url("booking/id/".$bookinglist[$i]->BookingID); ?>"><?php echo $i+1; ?></a></td>
+                                   <td><a><?php echo $bookinglist[$i]->PlateNumber; ?></a></td>
+                                   <td><a href="<?php echo base_url("booking/userid/".$bookinglist[$i]->UserBooking); ?>"><?php if ($bookinglist[$i]->Username==NULL) echo '<p class="text-center">-</p>'; else {echo $bookinglist[$i]->Username;} ?></a></td>
+                                   <td><?php if ($bookinglist[$i]->BookingStart == NULL)
+                                             {
+                                                echo '<p class="text-center">-</p>';
+                                             } 
+                                             else 
+                                             {
+                                                $str = $bookinglist[$i]->BookingStart; 
+                                                echo date('\<\b\> l jS F Y \<\b\>', strtotime($str));
+                                             } ?></td>
+                                   <td><?php if ($bookinglist[$i]->BookingEnd == NULL)  
+                                             {
+                                                echo '<p class="text-center">-</p>';
+                                             } 
+                                             else 
+                                             {
+                                                $str = $bookinglist[$i]->BookingEnd; 
+                                                echo date('\<\b\> l jS F Y \<\b\>', strtotime($str));
+                                             }  ?></td>
+                                   <td><?php if($bookinglist[$i]->BookingStart == NULL && $bookinglist[$i]->BookingEnd == NULL)
+                                             {
+                                                echo '<p class="text-center">-</p>';
+                                             }
+                                             else{
+                                                $strS = $bookinglist[$i]->BookingStart; 
+                                                echo date('\<\b\> g:ia \<\b\>', strtotime($strS)).'-';
+                                                $strE = $bookinglist[$i]->BookingEnd; 
+                                                echo date('\<\b\> g:ia \<\b\>', strtotime($strE));    
+                                            } ?></td>
                                    <td>
                                     <!--<span class="label label-danger">-->
                                       <?php echo $bookinglist[$i]->Destination; ?>
@@ -64,12 +84,13 @@
                                               } 
                                         ?></td>
                               </tr>
-              <?php }
-              } else{
-                  echo '<tr>
-                          <td colspan="10"><p class="text-center">There is no result available.</p></td>
-                        </tr>';
-              } ?>
+          <?php } //else{
+                  //echo '<tr>
+                  //  <td colspan="9"><p class="text-center">There is no result available.</p></td>
+
+                  //</tr>';
+          //}
+                  } ?>
         </tbody>
       </tr>
     </table>

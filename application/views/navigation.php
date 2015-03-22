@@ -8,12 +8,17 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">CMAS</a>
+
+      <a class="navbar-brand" href="<?php echo base_url() ?>"><span class="glyphicon glyphicon-home"></span>&nbsp;CMAS</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
+        <?php
+          if($role == 'Admin')
+          {
+        ?>
         <!-- IF ADMINISTRATOR-->
         <li class="dropdown">
           <a href="<?php echo base_url('booking') ?>" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Bookings<span class="caret"></span></a>
@@ -26,35 +31,67 @@
             <li><a href="<?php echo base_url('booking/bytoday') ?>">By Today</a></li>
             <li><a href="<?php echo base_url('booking/bythisweek') ?>">By This Week</a></li>
             <li><a href="<?php echo base_url('booking/bythismonth') ?>">By This Month</a></li>
-            <li><a href="<?php echo base_url('booking/bydate') ?>">By Specific Period</a></li>
+            <li><a href="<?php echo base_url('booking/searchbydate') ?>">By Specific Period</a></li>
           </ul>
         </li>
         <!-- ENDIIF ADMINISTRATOR-->
+        <?php } ?>
 
         <!-- IF NORMAL USER-->
+        <?php
+          if($role != 'Admin')
+          {
+        ?>
         <li class="dropdown">
           <a href="<?php echo base_url('booking') ?>" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Bookings<span class="caret"></span></a>
           <!-- IF NORMAL USER-->
            <ul class="dropdown-menu" role="menu">
             <li><a href="<?php echo base_url('booking/request') ?>">Book A Vehicle</a></li>
             <li class="divider"></li>
-            <li><a href="<?php echo base_url('booking') ?>">My Booking Request</a></li>
+            <li><a href="<?php echo base_url('booking') ?>">All Booking Request</a></li>
+            <li><a href="<?php echo base_url('booking/userid/'.$this->session->userdata('userid')) ?>">My Booking Request</a></li>
+            <li class="divider"></li>
+            <li><a href="<?php echo base_url('booking/bytoday') ?>">By Today</a></li>
+            <li><a href="<?php echo base_url('booking/bythisweek') ?>">By This Week</a></li>
+            <li><a href="<?php echo base_url('booking/bythismonth') ?>">By This Month</a></li>
+            <li><a href="<?php echo base_url('booking/searchbydate') ?>">By Specific Period</a></li>
           </ul>
         </li>
+        <?php } ?>
         <!-- ENDIF NORMAL USER-->
-
-        <li><a href="<?php echo base_url('driver') ?>">Drivers/Holders</a></li>
-        <li><a href="<?php echo base_url('schedule') ?>">Maintenance Schedule</a></li>
+        <?php
+          if($role == 'Admin')
+          {
+        ?>
+        <li class="dropdown">
+          <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Car Management<span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="<?php echo base_url('caradmin') ?>">Car Admin</a></li>
+            <li><a href="<?php echo base_url('maintenance') ?>">Car Maintenance History</a></li>
+          </ul>
+        </li>
+        <li><a href="<?php echo base_url('useradmin') ?>">User Admin</a></li>
+        <?php
+          }
+        ?>
+        
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
-        <li class="active"><a href="#">Alert <span class="badge">4</span></a></li>
+        <?php
+          if($role == 'Admin')
+          {
+        ?>
+        <li><a href="<?php echo base_url('reminder') ?>">Reminder <span class="glyphicon glyphicon-info-sign"></span></a></li>
+        <?php
+          }
+        ?>
         <li class="dropdown">
-          <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Setting <span class="caret"></span></a>
+          <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-user"> <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="<?php echo base_url('booking') ?>">Profile</a></li>
+            <li><a href="<?php echo base_url('changepassword') ?>">Change Password</a></li>
             <li class="divider"></li>
-            <li><a href="<?php echo base_url('booking') ?>">Sign In/Sign Out</a></li>
+            <li><a href="<?php echo base_url('login/dologout') ?>">Sign Out</a></li>
           </ul>
         </li>
       </ul>

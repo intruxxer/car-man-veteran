@@ -59,11 +59,10 @@
         <div class="form-group">
           <label for="">Driver</label>
           <select class="form-control" id="" name="Driver">
-                <option value="<?php if(true) echo "1" ?>" >Driver A</option>
-                <option value="<?php if(true) echo "2" ?>" >Driver B</option>
-                <option value="<?php if(true) echo "3" ?>" >Driver C</option>
-                <option value="<?php if(true) echo "4" ?>" >Driver D</option>
-                <option value="<?php if(true) echo "99" ?>" >Self Driver</option>
+          <?php for($i=0; $i < count($driverlist); $i++) { ?>
+                <?php echo '<option value="'.$driverlist[$i]->UserID.'" >'.$driverlist[$i]->Username.'</option>'; ?>
+          <?php }  ?>
+                <?php echo '<option value="99" >Self Driving</option>'; ?>
           </select>
         </div>
       </div>
@@ -71,10 +70,9 @@
         <div class="form-group">
           <label for="">Vehicle</label>
           <select class="form-control" id="" name="CarID">
-                <option value="<?php if(true) echo "101" ?>" >Car A Toyota Innova</option>
-                <option value="<?php if(true) echo "201" ?>" >Motorbike A Honda Revo</option>
-                <option value="<?php if(true) echo "102" ?>" >Car B Hino E-Buzz</option>
-                <option value="<?php if(true) echo "103" ?>" >Car C Toyota Altis</option>
+          <?php for($i=0; $i < count($carlist); $i++) { ?>
+                <?php echo '<option value="'.$carlist[$i]->CarID.'" >'.$carlist[$i]->BrandName.' '.$carlist[$i]->TypeName.' (<b>'.$carlist[$i]->PlateNumber.'</b>)</option>'; ?>
+          <?php }  ?>
           </select>
         </div>
       </div>
